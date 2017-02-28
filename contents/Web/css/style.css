@@ -42,6 +42,28 @@ body {
     width: 200vw;
 }
 
+.obstructor {
+    z-index: 3;
+    position: fixed;
+    
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+    background-color: #f7f7f7;
+    
+    height: 100vh;
+    width: 100vw;
+    
+    margin-left: 0;
+    
+    transition: margin-left cubic-bezier(.35, -0.01, .75, 1.01) 0.7s;
+}
+
+.obstructor.view {
+    margin-left: -100vw;
+}
+
 .sub-body {
     /*position: fixed;*/
     overflow-y: hidden;
@@ -76,7 +98,7 @@ h3 {
     
 }
 
-.tray, .sub-body {
+.tray, .sub-body, .obstructor {
     -webkit-user-select: none;
             user-select: none;
 }
@@ -99,6 +121,7 @@ h3 {
 }
 
 .tray {
+    z-index: 0;
     width: 10rem;
     margin-left: -3.2rem;
     transition: margin cubic-bezier(.25, .04, .41, 1) 0.3s;
@@ -112,7 +135,7 @@ h3 {
     margin-left: -6.4rem;
 }
 
-.exit-box, .index-box, .project-link {
+.exit-box, .index-box, .project-link, .obstructor>div {
     display: inline-block;
     clear: none;
     padding: 0.2rem;

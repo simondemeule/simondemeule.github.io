@@ -257,6 +257,7 @@ function windowloadhandler() {
         state = "free";
         initscrollconv();
     }
+    $(".obstructor").addClass("view");
 }
 
 $(window).on('load', windowloadhandler);
