@@ -47,6 +47,7 @@ body {
     position: fixed;
     
     display:flex;
+    flex-direction: column;
     justify-content:center;
     align-items:center;
     
@@ -62,6 +63,15 @@ body {
 
 .obstructor.view {
     margin-left: -100vw;
+}
+
+.obstructor-loading {
+    
+}
+
+.obstructor-desc {
+    margin-top: 2rem;
+    text-align: center;
 }
 
 .sub-body {
@@ -135,7 +145,7 @@ h3 {
     margin-left: -6.4rem;
 }
 
-.exit-box, .index-box, .project-link, .obstructor>div {
+.exit-box, .index-box, .project-link, .obstructor-loading {
     display: inline-block;
     clear: none;
     padding: 0.2rem;
