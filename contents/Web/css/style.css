@@ -70,8 +70,16 @@ body {
 }
 
 .obstructor-desc {
+    visibility: hidden;
+    height: 0;
+    
     margin-top: 2rem;
     text-align: center;
+}
+
+.obstructor-desc.view {
+    visibility: visible;
+    height: auto;
 }
 
 .sub-body {

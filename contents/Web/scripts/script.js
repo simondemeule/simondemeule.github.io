@@ -257,7 +257,17 @@ function windowloadhandler() {
         state = "free";
         initscrollconv();
     }
-    $(".obstructor").addClass("view");
+    var isMac = navigator.platform.indexOf('Mac') > -1;
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+    var isChrome = !!window.chrome && !!window.chrome.webstore;
+    
+    if(isMac && (isSafari || isChrome)) {
+        $(".obstructor").addClass("view");
+    }
+    else {
+        $(".obstructor-loading").text("Error");
+        $(".obstructor-desc").addClass("view");
+    }
 }
 
 $(window).on('load', windowloadhandler);
