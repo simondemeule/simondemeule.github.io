@@ -19,6 +19,7 @@ var scrollconv = true;
 */
 
 $(document).ready(function() {
+    updateobstructor();
     loadvariables();
     build();
 });
@@ -239,6 +240,22 @@ function projectlinkclickhandler(event) {
 
 $(document).on("click", ".project-link", projectlinkclickhandler);
 
+function updateobstructor() {
+    var isMac = navigator.platform.indexOf('Mac') > -1;
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+    var isChrome = !!window.chrome && !!window.chrome.webstore;
+    
+    if(isMac && (isSafari || isChrome)) {
+        $(".obstructor").addClass("view");
+    }
+    else {
+        $(".obstructor-loading").text("Error");
+        $(".obstructor-desc").addClass("view");
+        window.stop(); //works in all browsers but IE    
+        if ($.browser.msie) {document.execCommand("Stop");}; //works in IE, 
+    }
+}
+
 function windowloadhandler() {
     // on document load, check hash for state
     if(location.hash !== "") {
@@ -256,17 +273,6 @@ function windowloadhandler() {
     else {
         state = "free";
         initscrollconv();
-    }
-    var isMac = navigator.platform.indexOf('Mac') > -1;
-    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
-    var isChrome = !!window.chrome && !!window.chrome.webstore;
-    
-    if(isMac && (isSafari || isChrome)) {
-        $(".obstructor").addClass("view");
-    }
-    else {
-        $(".obstructor-loading").text("Error");
-        $(".obstructor-desc").addClass("view");
     }
 }
 
