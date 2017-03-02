@@ -5,6 +5,7 @@ var $target;
 var $newtarget;
 var hash;
 var scrollconv = true;
+var supported = false;
 
 /* TODO
 - rethink a better wide display layout
@@ -19,7 +20,7 @@ var scrollconv = true;
 */
 
 $(document).ready(function() {
-    updateobstructor();
+    updateobstructor("checkerror");
     loadvariables();
     build();
 });
@@ -240,19 +241,26 @@ function projectlinkclickhandler(event) {
 
 $(document).on("click", ".project-link", projectlinkclickhandler);
 
-function updateobstructor() {
-    var isMac = navigator.platform.indexOf('Mac') > -1;
-    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
-    var isChrome = !!window.chrome && !!window.chrome.webstore;
-    
-    if(isMac && (isSafari || isChrome)) {
+function updateobstructor(action) {
+    if(action === "checkerror")
+    {
+        var isMac = navigator.platform.indexOf('Mac') > -1;
+        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+        var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+        if(isMac && (isSafari || isChrome)) {
+            supported = true;
+        }
+        else {
+            suppoted = false;
+            $(".obstructor-loading").text("Error");
+            $(".obstructor-desc").addClass("view");
+            window.stop(); //works in all browsers but IE    
+            if ($.browser.msie) {document.execCommand("Stop");}; //works in IE,
+        }
+    } 
+    else if(action === "hide" && supported === true) {
         $(".obstructor").addClass("view");
-    }
-    else {
-        $(".obstructor-loading").text("Error");
-        $(".obstructor-desc").addClass("view");
-        window.stop(); //works in all browsers but IE    
-        if ($.browser.msie) {document.execCommand("Stop");}; //works in IE, 
     }
 }
 
@@ -274,6 +282,7 @@ function windowloadhandler() {
         state = "free";
         initscrollconv();
     }
+    updateobstructor("hide");
 }
 
 $(window).on('load', windowloadhandler);
