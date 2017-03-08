@@ -62,7 +62,7 @@ function updatesupport() {
     else {
         scrolltype = "anim";
     }
-
+    isSafari = true;
     console.log("/ isMac " + isMac);
     console.log("/ isMobile " + isMobile);
     console.log("/ scrolltype " + scrolltype);
