@@ -68,7 +68,7 @@ function updatesupport() {
     console.log("/ scrolltype " + scrolltype);
     console.log("/ isSafari " + isSafari);
     console.log("/ isChrome " + isChrome);
-    if(isSafari || isChrome) {
+    if((isSafari || isChrome) && !(isMobile)) { // mobile disabled
         supported = true;
         console.log("/ supported " + supported);
     }
@@ -77,8 +77,8 @@ function updatesupport() {
         console.log("/ supported " + supported);
         $(".obstructor-loading").text("Error");
         $(".obstructor-desc").addClass("view");
-        window.stop(); //works in all browsers but IE    
-        if ($.browser.msie) {document.execCommand("Stop");}; //works in IE,
+        window.stop(); // works in all browsers but IE    
+        if ($.browser.msie) {document.execCommand("Stop");}; // works in IE,
     }
 }
 
