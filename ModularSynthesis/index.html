@@ -1,0 +1,59 @@
+<!-- created by Simon Demeule -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Modular Synthesis</title>
+    </head>
+    <body>
+        <div class="obstructor" style="z-index: 3; position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: #fff"></div>
+
+        <img class="project-image" data-src="1D8A5888.jpg">
+
+        <div class="project-title">Modular Synthesis</div>
+
+        <div class="project-content">
+            <div style="color: rgb(26, 13, 8); background-color: rgb(214, 227, 229)">
+                <p>This is an analog synthesizer I hand built in 2016. From bare copper boards, integrated circuits, passive components, wires and acrylic I assembled it over the course of a year, following the open source plans authored by Yves Usson.</p>
+                <p>After having encountered modularity in shading, colors and textures and color in the 3D software Blender, the idea of applying the same principles to sound seduced me.</p>
+            </div>
+            <img src="ModularSynthesis/1D8A5874.jpg">
+        </div>
+        
+        <div class="title-style" style="color: rgb(214, 227, 229)"></div>
+        
+        <div class="background-style" style="background-color: rgb(26, 13, 8);"></div>
+
+        <style>
+            .obstructor {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+
+                background-color: #fff;
+            }
+        </style>
+        <script>
+            function ajax(url, callback){
+                var xmlhttp;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        callback(xmlhttp.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+            
+            ajax("/index.html", function(data) {
+                document.open();
+                document.write(data);
+                document.close();
+            })
+        </script>
+    </body>
+</html>

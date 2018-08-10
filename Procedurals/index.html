@@ -1,0 +1,62 @@
+<!-- created by Simon Demeule -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Procedurals</title>
+    </head>
+    <body>
+        <div class="obstructor" style="z-index: 3; position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: #fff"></div>
+
+        <img class="project-image" data-src="Sphere.001.jpg">
+
+        <div class="project-title">Procedurals</div>
+
+        <div class="project-content">
+            <div style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255)">
+                <p>This is an exploration of what could be done by using strictly procedural means of generating shape, shading, coulour and texture, within the bounds of the unit sphere. Rather than being hand-modeled and textured, these objects were created by describing them in mathematical terms. Created in 2014 using Blender.</p>
+            </div>
+            <img src="/Procedurals/Sphere.002thumb.jpg" data-src="/Procedurals/Sphere.002.jpg">
+            <img src="/Procedurals/Sphere.004thumb.jpg" data-src="/Procedurals/Sphere.004.jpg">
+            <img src="/Procedurals/Sphere.006thumb.jpg" data-src="/Procedurals/Sphere.006.jpg">
+            <img src="/Procedurals/Sphere.007thumb.jpg" data-src="/Procedurals/Sphere.007.jpg">
+            <img src="/Procedurals/Sphere.008Bthumb.jpg" data-src="/Procedurals/Sphere.008B.jpg">
+        </div>
+        
+        <div class="title-style" style="color: rgb(67, 67, 67)"></div>
+        
+        <div class="background-style" style="background-color: rgb(227, 227, 227);"></div>
+
+        <style>
+            .obstructor {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+
+                background-color: #fff;
+            }
+        </style>
+        <script>
+            function ajax(url, callback){
+                var xmlhttp;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        callback(xmlhttp.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+            
+            ajax("/index.html", function(data) {
+                document.open();
+                document.write(data);
+                document.close();
+            })
+        </script>
+    </body>
+</html>

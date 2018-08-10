@@ -1,0 +1,63 @@
+<!-- created by Simon Demeule -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Poster Design</title>
+    </head>
+    <body>
+        <div class="obstructor" style="z-index: 3; position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: #fff"></div>
+
+        <img class="project-image" data-src="Freeform.png">
+
+        <div class="project-title">Poster Design</div>
+
+        <div class="project-content">
+            <div style="color: rgb(15, 37, 195); background-color: rgb(247, 249, 255)">
+                <p>In this recent project (2017) I set out to create two posters for a fictional gig — one which I hope to make real one day. The intent was to communicate what it was efficiently (along with where it would be and when) — a large part of what expresses the genre of music the gig belongs to — electronic music — is simply the chosen aesthetic; angular features, saturated and contrasting colors, abstraction, geometric figures, glitch-like patterns, and contemporary typefaces. </p>
+                <p>In this first poster, I played with gradient fills to make lines clearly stand out without using strokes. One could certainly say this style has roots in futurism. I proceeded by creating the geometry and gradients in Illustrator, also drawing the type elements by hand. I then added subtle color spreading effects in Blender.</p>
+            </div>
+            <img src="/PosterDesign/Orthogonalthumb.png" data-src="/PosterDesign/Orthogonal.png">
+            <div style="color: rgb(15, 37, 195); background-color: rgb(247, 249, 255)">
+                <p>In this second poster, I went with a more usual grid-based approach, using the QR-like pattern as a basis. The 3D polyhedron rain was created using Blender using a particle system, simple custom shaders, and some depth-of-field compositing. The QR pattern was also created using Blender particle systems. Finally, everything was brought together in Illustrator, where type based elements were added. Two complementary fonts were chosen; a geometric sans serif in two weights, and a slab serif sharing a similar geometric character, it's thick slabs working in tandem with the square elements of the pixelated background.
+                </p>
+            </div>
+        </div>
+        
+        <div class="title-style" style="color: rgb(247, 249, 255)"></div>
+        
+        <div class="background-style" style="background-color: rgb(223,47,148	);"></div>
+
+        <style>
+            .obstructor {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+
+                background-color: #fff;
+            }
+        </style>
+        <script>
+            function ajax(url, callback){
+                var xmlhttp;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        callback(xmlhttp.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+            
+            ajax("/index.html", function(data) {
+                document.open();
+                document.write(data);
+                document.close();
+            })
+        </script>
+    </body>
+</html>

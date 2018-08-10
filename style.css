@@ -1,0 +1,608 @@
+/* created by Simon Demeule */
+
+html {
+    font-family: Futura,Trebuchet MS,Arial,sans-serif; 
+}
+
+body {
+    overflow-x: hidden;
+    margin: 0 0 0 0;
+}
+
+.obstructor {
+    position: fixed;
+    z-index: 3;
+    
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    
+    transition: cubic-bezier(.54, 0, .43, 1) 1s !important;
+    
+    background-color: #fff;
+}
+
+.obstructor-loading-bar {    
+    z-index: 4;
+    overflow: hidden;
+    
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 0vw;
+    
+    transition: all cubic-bezier(0, .21, .37, 1) 0.3s !important;
+    
+    background-color: rgb(0, 18, 59);
+}
+
+.loading-text-sub {
+    color: inherit;
+    padding-top: 45vh;
+    margin-bottom: -45vh;
+    height: 0;
+    width: 0;
+}
+
+.loading-text {
+    color: inherit;
+    width: 100vw;
+    text-align: center;
+    font-size: 2rem;
+}
+
+@media (min-aspect-ratio: 4/5) {
+    /* desktop ratio */
+    
+    html {
+        font-size: 2vw;
+    }
+    
+    .cookies-text {
+        width: 60vw;
+        margin-left: 20vw;
+        margin-top: 35vh;
+        text-align: left;
+        font-size: 1rem;
+    }
+    
+    .unsupported {
+        float: left; 
+        width: 66vw; 
+        margin-left: 15vw; 
+        margin-right: 15vw; 
+        margin-bottom: 10vw;
+        padding: 1rem; 
+        background-color: rgb(237, 116, 80); 
+        color: rgb(255, 255, 255);
+    }
+    
+    .top-title-sub {
+        margin: 15vw;
+        margin-top: 10vw;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+
+    .top-hello-sub {
+        float: left;
+        width: 3.8rem;
+        height: 3.8rem;
+        padding: 0.6rem;
+        font-size: 1.5rem;
+        background-color: rgb(245, 245, 58);
+        color: rgb(13, 105, 198);
+    }
+
+    .top-name-sub {
+        float: left;
+    }
+
+    .top-name-sub {
+        float: left;
+        font-size: 2.7rem;
+        height: 3.8rem;
+        padding: 0.6rem;
+        background-color: rgb(237, 116, 80);
+        color: rgb(255, 255, 255);
+    }
+
+    .top-content-sub-1 {
+        /* used as main top group */
+        float: left;
+        margin: 15vw;
+        margin-top: 5vw;
+        margin-bottom: 5vw;
+        background-color: rgb(0, 18, 59);
+    }
+
+    .top-content-sub-2 {
+        /* used to crop out contact info */
+        overflow: hidden;
+    }
+
+    .top-image-sub {
+        float: left;
+        width: 40vw;
+    }
+
+    .top-image-sub>img {
+        width: inherit;
+    }
+
+    .top-content-sub-3 {
+        /* used give content it's width in vw */
+        float: left;
+        width: 30vw;
+    }
+
+    .top-content {
+        /* used give content it's padding in rem */
+        padding: 1rem;
+        background-color: rgb(13, 105, 198);
+        color: rgb(255, 255, 255);
+    }
+
+    .top-contact-info-sub-1 {
+        /* used to place contact info just over the contact button */
+        float: left;
+        height: 0;
+    }
+
+    .top-contact-info-sub-2 {
+        /* used give contact info it's width in vw */
+        margin-left: 5vw;
+        margin-right: 5vw;
+        width: 60vw;
+        height: 6rem;
+    }
+
+    .top-contact-info {
+        /* used give contact info it's padding in rem */
+        height: 6rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        transform: scale(1.2);
+        transition: all cubic-bezier(.47, .01, .06, 1.01) 0.6s;
+        background-color: rgb(245, 245, 58);
+        color: rgb(13, 105, 198);
+    }
+    
+    .top-contact-info>p:first-of-type {
+        margin-top: 0;
+    }
+    
+    .top-contact-info>p>a {
+        color: rgb(0, 18, 59);
+    }
+    
+    .top-contact-info>p>a:visited {
+        color: rgb(0, 18, 59);
+    }
+
+    .top-contact-info.full {
+        margin-top: -7rem;
+        transform: scale(1);
+    }
+
+    .top-contact-button {
+        float: left;
+        text-align: center;
+        width: 70vw;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        background-color: rgb(237, 116, 80);
+        color: rgb(255, 255, 255);
+
+        cursor: pointer;
+    }
+    
+    .project {
+        width: 100vw;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        transition: all cubic-bezier(.47, .01, .33, 1) 0.6s;
+    }
+    
+    .project.transition-disable {
+        transition: none;
+    }
+    
+    .project:last-of-type:not(.full) {
+        margin-bottom: 2rem;
+    }
+
+    .project-sub {
+        overflow: hidden;
+        padding-bottom: 2rem;
+        flex-shrink: 0;
+        transition: inherit;
+    }
+
+    .project-sub:hover, .project-sub.full {
+        cursor: pointer;
+        margin-top: 0rem;
+        padding-left: 40vw;
+        padding-right: 40vw;
+        padding-top: 1.6rem;
+    }
+
+
+    .project-sub:hover {
+        padding-bottom: 4rem;
+    }
+
+    .project-sub.full {
+        /* a padding-bottom is set according to project-content's height in rem via javascript for this selector */
+        /* TODO: add dynamic, debounced recalculation on viewport width change */
+        cursor: auto;
+    }
+
+    .project-image-sub {
+        overflow: hidden;
+        transform: scale(1.15);
+        transition: cubic-bezier(.4, -0.01, .21, 1) 0.5s;
+    }
+
+    .project-sub:hover>.project-image-sub, .project-sub.full>.project-image-sub {
+        transform: scale(1);
+    }
+
+    .project-image-sub>img {
+        display: block;
+        height: auto;
+        width: 60vw;
+    }
+
+    .project-title {
+        height: 3rem;
+        width: inherit;
+        margin-top: -3rem;
+        max-width: 60vw;
+        transition: inherit;
+    }
+
+    .project-title {
+        font-size: 2rem;
+    }
+
+    .project-sub:hover>.project-title, .project-sub.full>.project-title {
+        margin-top: -0.4rem;
+        margin-bottom: .8rem;
+    }
+
+    .project-content-sub-1 {
+        height: 0;
+        transition: inherit;
+    }
+
+    .project-content-sub-2 {
+        width: 60vw;
+        margin-top: -2rem;
+        margin-bottom: 2rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: inherit;
+    }
+
+    .project-sub.full>.project-content-sub-1>.project-content-sub-2 {
+        /* a max-height is set according to project-content's height in rem via javascript for this selector */
+        /* TODO: add dynamic, debonced recalculation on viewport width change */
+        margin-top: 0; 
+    }
+
+    .project-content>div {
+        text-align: left;
+        margin-top: 2rem;
+        padding: 1rem;
+        padding-top: 0.2rem;
+        background-color: #fff;
+    }
+
+    .project-content>div>p:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .project-content>img {
+        width: 60vw;
+        margin-top: 2rem;
+        transform: translate3d(0,0,0);
+        /*opacity: 1;*/
+        filter: blur(0px);
+        transition: all cubic-bezier(.31, 0, .53, 1) 0.5s;
+    }
+
+    .project-content>img[data-src] {
+        /*opacity: 0;*/
+        filter: blur(15px);
+    }
+}
+
+@media (max-aspect-ratio: 4/5) {
+    /* mobile ratio */
+    html {
+        font-size: 4vw;
+    }
+    
+    .cookies-text {
+        width: 60vw;
+        margin-left: 20vw;
+        margin-top: 25vh;
+        text-align: center;
+        font-size: 1rem;
+    }
+    
+    .unsupported {
+        float: left; 
+        width: 72vw; 
+        margin-left: 10vw; 
+        margin-right: 10vw; 
+        margin-bottom: 10vw;
+        padding: 1rem; 
+        background-color: rgb(237, 116, 80); 
+        color: rgb(255, 255, 255);
+    }
+        
+    .top-title-sub {
+        position: absolute;
+        z-index: 2;
+        width: 80vw;
+        margin: 10vw;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+
+    .top-hello-sub {
+        float: left;
+        height: auto;
+        width: auto;
+        padding: 0.6rem;
+        font-size: 1.5rem;
+        background-color: rgb(245, 245, 58);
+        color: rgb(13, 105, 198);
+    }
+    
+    .top-hello-sub>div {
+        display: inline-block;
+        clear: none;
+    }
+
+    .top-name-sub {
+        float: left;
+        margin-left: 3rem;
+        clear: both;
+    }
+    
+    .top-name-sub:last-of-type {
+        float: right;
+    }
+
+    .top-name-sub {
+        float: left;
+        font-size: 2.7rem;
+        height: 3.8rem;
+        padding: 0.6rem;
+        background-color: rgb(237, 116, 80);
+        color: rgb(255, 255, 255);
+    }
+
+    .top-content-sub-1 {
+        /* used as main top group */
+        z-index: 1;
+        float: left;
+        margin: 10vw;
+        margin-top: 13.2rem;
+        margin-bottom: 5vw;
+        background-color: rgb(0, 18, 59);
+    }
+
+    .top-content-sub-2 {
+        /* used to crop out contact info */
+        overflow: hidden;
+    }
+
+    .top-image-sub {
+        float: left;
+        width: 80vw;
+    }
+
+    .top-image-sub>img {
+        width: inherit;
+    }
+
+    .top-content-sub-3 {
+        /* used give content it's width in vw */
+        float: left;
+        clear: both;
+        width: 80vw;
+    }
+
+    .top-content {
+        /* used give content it's padding in rem */
+        padding: 1rem;
+        background-color: rgb(13, 105, 198);
+        color: rgb(255, 255, 255);
+    }
+
+    .top-contact-info-sub-1 {
+        /* used to place contact info just over the contact button */
+        float: left;
+        height: 0;
+    }
+
+    .top-contact-info-sub-2 {
+        /* used give contact info it's width in vw */
+        margin-left: 5vw;
+        margin-right: 5vw;
+        width: 70vw;
+        height: 6rem;
+    }
+
+    .top-contact-info {
+        /* used give contact info it's padding in rem */
+        height: 8rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        transform: scale(1.2);
+        transition: all cubic-bezier(.47, .01, .06, 1.01) 0.6s;
+        background-color: rgb(245, 245, 58);
+        color: rgb(13, 105, 198);
+    }
+    
+    .top-contact-info>p:first-of-type {
+        margin-top: 0;
+    }
+    
+    .top-contact-info>p>a {
+        color: rgb(0, 18, 59);
+    }
+    
+    .top-contact-info>p>a:visited {
+        color: rgb(0, 18, 59);
+    }
+
+    .top-contact-info.full {
+        margin-top: -9.5rem;
+        transform: scale(1);
+    }
+
+    .top-contact-button {
+        float: left;
+        text-align: center;
+        width: 80vw;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        background-color: rgb(237, 116, 80);
+        color: rgb(255, 255, 255);
+
+        cursor: pointer;
+    }
+    
+    .project {
+        width: 100vw;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        transition: all cubic-bezier(.47, .01, .33, 1) 0.8s;
+    }
+    
+    .project.transition-disable {
+        transition: none;
+    }
+    
+    .project:last-of-type:not(.full) {
+        margin-bottom: 2rem;
+    }
+
+    .project-sub {
+        overflow: hidden;
+        padding-bottom: 1rem;
+        flex-shrink: 0;
+        transition: inherit;
+    }
+
+    .project-sub:hover, .project-sub.full {
+        cursor: pointer;
+        margin-top: 0rem;
+        padding-left: 40vw;
+        padding-right: 40vw;
+        padding-top: 1.6rem;
+    }
+
+
+    .project-sub:hover {
+        padding-bottom: 4rem;
+    }
+
+    .project-sub.full {
+        /* a padding-bottom is set according to project-content's height in rem via javascript for this selector */
+        /* TODO: add dynamic, debounced recalculation on viewport width change */
+        cursor: auto;
+    }
+
+    .project-image-sub {
+        overflow: hidden;
+        transform: scale(1.15);
+        transition: cubic-bezier(.4, -0.01, .21, 1) 0.5s;
+    }
+
+    .project-sub:hover>.project-image-sub, .project-sub.full>.project-image-sub {
+        transform: scale(1);
+    }
+
+    .project-image-sub>img {
+        display: block;
+        height: auto;
+        width: 80vw;
+    }
+
+    .project-title {
+        height: 3rem;
+        width: inherit;
+        margin-top: -3rem;
+        max-width: 60vw;
+        transition: inherit;
+    }
+
+    .project-title {
+        font-size: 2rem;
+    }
+
+    .project-sub:hover>.project-title, .project-sub.full>.project-title {
+        margin-top: -0.4rem;
+        margin-bottom: .8rem;
+    }
+
+    .project-content-sub-1 {
+        height: 0;
+    }
+
+    .project-content-sub-2 {
+        width: 80vw;
+        margin-top: -2rem;
+        margin-bottom: 2rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: inherit;
+    }
+
+    .project-content:last-of-type() {
+        margin-bottom: 2rem;
+    }
+
+    .project-sub.full>.project-content-sub-1>.project-content-sub-2 {
+        /* a max-height is set according to project-content's height in rem via javascript for this selector */
+        /* TODO: add dynamic, debonced recalculation on viewport width change */
+        margin-top: 0; 
+    }
+
+    .project-content>div {
+        text-align: left;
+        margin-top: 2rem;
+        padding: 1rem;
+        padding-top: 0.2rem;
+        background-color: #fff;
+    }
+
+    .project-content>div>p:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .project-content>img {
+        width: 80vw;
+        margin-top: 2rem;
+        transform: translate3d(0,0,0);
+        /*opacity: 1;*/
+        filter: blur(0px);
+        transition: all cubic-bezier(.31, 0, .53, 1) 0.5s;
+    }
+
+    .project-content>img[data-src] {
+        /*opacity: 0;*/
+        filter: blur(10px);
+    }
+}
