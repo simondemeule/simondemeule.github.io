@@ -53,39 +53,39 @@ body {
 }
 
 .top-hello-sub {
-    background-color: rgb(245, 245, 58);
-    color: rgb(13, 105, 198);
+    background-color: rgb(224, 107, 21);
+    color: rgb(255, 255, 255);
 }
 
 .top-name-sub {
-    background-color: rgb(237, 116, 80);
+    background-color: rgb(24, 152, 209);
     color: rgb(255, 255, 255);
 }
 
 .top-content-sub-1 {
-    background-color: rgb(0, 18, 59);
+    background-color: rgb(5, 73, 103);
 }
 
 .top-content {
-    background-color: rgb(13, 105, 198);
+    background-color: rgb(24, 152, 209);
     color: rgb(255, 255, 255);
 }
 
 .top-contact-info {
-    background-color: rgb(245, 245, 58);
-    color: rgb(13, 105, 198);
+    background-color: rgb(255, 255, 255);
+    color: rgb(5, 73, 103);
 }
 
 .top-contact-info>p>a {
-    color: rgb(0, 18, 59);
+    color: rgb(224, 107, 21);
 }
 
 .top-contact-info>p>a:visited {
-    color: rgb(0, 18, 59);
+    color: rgb(224, 107, 21);
 }
 
 .top-contact-button {
-    background-color: rgb(237, 116, 80);
+    background-color: rgb(224, 107, 21);
     color: rgb(255, 255, 255);
 }
 

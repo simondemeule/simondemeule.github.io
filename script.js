@@ -13,7 +13,7 @@
 • remove redundant CSS in project pages (obstructor stuff)
 • dynamic title length
 
-self note: to re-enable google analytics, uncomment script in index.html and uncomment gtag(...) in this script
+self note: to enable/disable google analytics, comment/uncomment script in index.html and uncomment gtag(...) in this script
 
 */
 
@@ -529,7 +529,7 @@ function viewProject(newActive, originIsHistory) {
                 if(!originIsHistory) {
                     replaceAddress(getAddressFromProject(newActive));
                 }
-                //gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
+                gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
             } else {
                 console.log("| previous active project");
                 console.log("| transitive close and load");
@@ -556,7 +556,7 @@ function viewProject(newActive, originIsHistory) {
                 if(!originIsHistory) {
                     replaceAddress(getAddressFromProject(newActive));
                 }
-                //gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
+                gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
             }
         } else {
             console.log("| return to index");
@@ -565,7 +565,7 @@ function viewProject(newActive, originIsHistory) {
             if(!originIsHistory) {
                 replaceAddress(getAddressFromProject(newActive));
             }
-            //gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
+            gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
         }
         setActiveProject(newActive);
     } else {
