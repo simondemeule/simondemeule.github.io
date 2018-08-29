@@ -52,6 +52,43 @@ body {
     font-size: 2rem;
 }
 
+.top-hello-sub {
+    background-color: rgb(245, 245, 58);
+    color: rgb(13, 105, 198);
+}
+
+.top-name-sub {
+    background-color: rgb(237, 116, 80);
+    color: rgb(255, 255, 255);
+}
+
+.top-content-sub-1 {
+    background-color: rgb(0, 18, 59);
+}
+
+.top-content {
+    background-color: rgb(13, 105, 198);
+    color: rgb(255, 255, 255);
+}
+
+.top-contact-info {
+    background-color: rgb(245, 245, 58);
+    color: rgb(13, 105, 198);
+}
+
+.top-contact-info>p>a {
+    color: rgb(0, 18, 59);
+}
+
+.top-contact-info>p>a:visited {
+    color: rgb(0, 18, 59);
+}
+
+.top-contact-button {
+    background-color: rgb(237, 116, 80);
+    color: rgb(255, 255, 255);
+}
+
 @media (min-aspect-ratio: 4/5) {
     /* desktop ratio */
     
@@ -67,17 +104,6 @@ body {
         font-size: 1rem;
     }
     
-    .unsupported {
-        float: left; 
-        width: 66vw; 
-        margin-left: 15vw; 
-        margin-right: 15vw; 
-        margin-bottom: 10vw;
-        padding: 1rem; 
-        background-color: rgb(237, 116, 80); 
-        color: rgb(255, 255, 255);
-    }
-    
     .top-title-sub {
         margin: 15vw;
         margin-top: 10vw;
@@ -91,12 +117,6 @@ body {
         height: 3.8rem;
         padding: 0.6rem;
         font-size: 1.5rem;
-        background-color: rgb(245, 245, 58);
-        color: rgb(13, 105, 198);
-    }
-
-    .top-name-sub {
-        float: left;
     }
 
     .top-name-sub {
@@ -104,8 +124,6 @@ body {
         font-size: 2.7rem;
         height: 3.8rem;
         padding: 0.6rem;
-        background-color: rgb(237, 116, 80);
-        color: rgb(255, 255, 255);
     }
 
     .top-content-sub-1 {
@@ -114,7 +132,6 @@ body {
         margin: 15vw;
         margin-top: 5vw;
         margin-bottom: 5vw;
-        background-color: rgb(0, 18, 59);
     }
 
     .top-content-sub-2 {
@@ -140,8 +157,6 @@ body {
     .top-content {
         /* used give content it's padding in rem */
         padding: 1rem;
-        background-color: rgb(13, 105, 198);
-        color: rgb(255, 255, 255);
     }
 
     .top-contact-info-sub-1 {
@@ -165,20 +180,10 @@ body {
         margin-top: 1rem;
         transform: scale(1.2);
         transition: all cubic-bezier(.47, .01, .06, 1.01) 0.6s;
-        background-color: rgb(245, 245, 58);
-        color: rgb(13, 105, 198);
     }
     
     .top-contact-info>p:first-of-type {
         margin-top: 0;
-    }
-    
-    .top-contact-info>p>a {
-        color: rgb(0, 18, 59);
-    }
-    
-    .top-contact-info>p>a:visited {
-        color: rgb(0, 18, 59);
     }
 
     .top-contact-info.full {
@@ -192,9 +197,6 @@ body {
         width: 70vw;
         padding-top: 0.4rem;
         padding-bottom: 0.4rem;
-        background-color: rgb(237, 116, 80);
-        color: rgb(255, 255, 255);
-
         cursor: pointer;
     }
     
@@ -334,17 +336,6 @@ body {
         text-align: center;
         font-size: 1rem;
     }
-    
-    .unsupported {
-        float: left; 
-        width: 72vw; 
-        margin-left: 10vw; 
-        margin-right: 10vw; 
-        margin-bottom: 10vw;
-        padding: 1rem; 
-        background-color: rgb(237, 116, 80); 
-        color: rgb(255, 255, 255);
-    }
         
     .top-title-sub {
         position: absolute;
@@ -361,8 +352,6 @@ body {
         width: auto;
         padding: 0.6rem;
         font-size: 1.5rem;
-        background-color: rgb(245, 245, 58);
-        color: rgb(13, 105, 198);
     }
     
     .top-hello-sub>div {
@@ -385,8 +374,6 @@ body {
         font-size: 2.7rem;
         height: 3.8rem;
         padding: 0.6rem;
-        background-color: rgb(237, 116, 80);
-        color: rgb(255, 255, 255);
     }
 
     .top-content-sub-1 {
@@ -396,7 +383,6 @@ body {
         margin: 10vw;
         margin-top: 13.2rem;
         margin-bottom: 5vw;
-        background-color: rgb(0, 18, 59);
     }
 
     .top-content-sub-2 {
@@ -423,8 +409,6 @@ body {
     .top-content {
         /* used give content it's padding in rem */
         padding: 1rem;
-        background-color: rgb(13, 105, 198);
-        color: rgb(255, 255, 255);
     }
 
     .top-contact-info-sub-1 {
@@ -448,20 +432,10 @@ body {
         margin-top: 1rem;
         transform: scale(1.2);
         transition: all cubic-bezier(.47, .01, .06, 1.01) 0.6s;
-        background-color: rgb(245, 245, 58);
-        color: rgb(13, 105, 198);
     }
     
     .top-contact-info>p:first-of-type {
         margin-top: 0;
-    }
-    
-    .top-contact-info>p>a {
-        color: rgb(0, 18, 59);
-    }
-    
-    .top-contact-info>p>a:visited {
-        color: rgb(0, 18, 59);
     }
 
     .top-contact-info.full {
@@ -475,9 +449,6 @@ body {
         width: 80vw;
         padding-top: 0.4rem;
         padding-bottom: 0.4rem;
-        background-color: rgb(237, 116, 80);
-        color: rgb(255, 255, 255);
-
         cursor: pointer;
     }
     
