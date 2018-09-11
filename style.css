@@ -424,7 +424,7 @@ body {
         float: left;
         margin: 10vw;
         margin-top: 13.2rem;
-        margin-bottom: 5vw;
+        margin-bottom: 10vw;
     }
 
     .top-content-sub-2 {
@@ -489,9 +489,36 @@ body {
         float: left;
         text-align: center;
         width: 80vw;
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
+        font-size: 1.5rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
         cursor: pointer;
+    }
+    
+    .top-portfolio-button {
+        float: left;
+        text-align: center;
+        width: 80vw;
+        font-size: 1.5rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        cursor: pointer;
+    }
+    
+    .content-title {
+        float: left;
+        margin-left: 10vw;
+        margin-right: 10vw;
+        padding: 0.6rem;
+        font-size: 1.5rem;
+    }
+    
+    .content {
+        float: left;
+        margin-left: 10vw;
+        margin-right: 10vw;
+        margin-bottom: 10vw;
+        padding: 0.6rem;
     }
     
     .project {

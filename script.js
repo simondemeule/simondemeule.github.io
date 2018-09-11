@@ -201,6 +201,17 @@ function appendProjectContentStyle(i) {
     }
 }
 
+/* broken for now
+function recalculateContentStyles() {
+    console.log("> recalculating content styles");
+    updateRem();
+    $("#content-style").remove();
+    for(var i = 0; i < projects.length; i++) {
+        appendProjectContentStyle(i);
+    }
+}
+*/
+
 function appendProjectTitle(i) {
     console.log("> appending title " + projects[i].name);
     projects[i].$sub.prepend(projects[i].title);
@@ -645,3 +656,16 @@ window.onpopstate = function (event) {
         viewProject(getProjectFromName(name), true);
     }
 }
+
+$(window).resize(function() {
+    resizeDebouncer();
+})
+    
+/* broken for now
+var resizeTimeout;
+    
+function resizeDebouncer() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(recalculateContentStyles
+    , 50);
+}*/
