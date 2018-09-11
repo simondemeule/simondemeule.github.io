@@ -89,6 +89,21 @@ body {
     color: rgb(255, 255, 255);
 }
 
+.top-portfolio-button {
+    background-color: rgb(234, 237, 242);
+    color: rgb(224, 107, 21);
+}
+
+.content-title {
+    background-color: rgb(0 ,0 ,0 );
+    color: rgb(255, 255, 255);
+}
+
+.content {
+    background-color: rgb(234, 237, 242);
+    color: rgb(0, 0, 0);
+}
+
 @media (min-aspect-ratio: 4/5) {
     /* desktop ratio */
     
@@ -195,9 +210,36 @@ body {
         float: left;
         text-align: center;
         width: 70vw;
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
+        font-size: 1.5rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
         cursor: pointer;
+    }
+    
+    .top-portfolio-button {
+        float: left;
+        text-align: center;
+        width: 70vw;
+        font-size: 1.5rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        cursor: pointer;
+    }
+    
+    .content-title {
+        float: left;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        padding: 0.6rem;
+        font-size: 1.5rem;
+    }
+    
+    .content {
+        float: left;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        margin-bottom: 15vw;
+        padding: 0.6rem;
     }
     
     .project {
