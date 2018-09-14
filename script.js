@@ -17,9 +17,7 @@ self note: to enable/disable google analytics, comment/uncomment script in index
 
 */
 
-/* This is a constructor for an object that exists for every project and holds info
-and methods about styling, file locations, content, viewing and loading status, etc.
-It is stored in the projects[] array */
+/* This is a constructor for an object that exists for every project and holds info and methods about styling, file locations, content, viewing and loading status, etc. It is stored in the projects[] array */
 function loadProjectObject(name) {
     var obj = {};
     obj.name = name;
@@ -73,9 +71,7 @@ function loadProjectObject(name) {
     return obj;
 }
 
-/* The loadProjectObjects() function filters through the page skeleton to find 
-projects. It then creates a project object in the projects[] array for each of 
-them */
+/* The loadProjectObjects() function filters through the page skeleton to find projects. It then creates a project object in the projects[] array for each of them */
 
 var projects = new Array();
 var projectObjectsLoaded = false;
@@ -88,9 +84,7 @@ function loadProjectObjects() {
     });
 }
 
-/* Everytime a project object finishes loading, it calls the 
-checkProjectObjectLoad() function, which checks if all other project objects are 
-loaded. If they are, it calls onAllProjectObjectsLoaded(), which then sets the initial active project and calls loadProjectViews(), which appends in the projects. */
+/* Everytime a project object finishes loading, it calls the checkProjectObjectLoad() function, which checks if all other project objects are loaded. If they are, it calls onAllProjectObjectsLoaded(), which then sets the initial active project and calls loadProjectViews(), which appends in the projects. */
 
 function checkProjectObjectLoad() {
     console.log("> checking project object loading");
@@ -116,6 +110,7 @@ function onAllProjectObjectsLoaded() {
     active = getProjectFromURL()
     setActiveProject(active);
     loadProjectViews();
+    updateOverProjectTimeout = setTimeout(updateOverProject, 200);
 }
 
 function loadProjectViews() {
@@ -131,10 +126,7 @@ function loadProjectViews() {
     }
 }
 
-/* A similar process is reiterated here: the append functions calls the 
-checkProjectViewLoad() function to check if all other projects are rendered. When 
-they all are, all that is left is to set the intial scroll, enable transitions, and 
-remove the obstructor*/
+/* A similar process is reiterated here: the append functions calls the  checkProjectViewLoad() function to check if all other projects are rendered. When they all are, all that is left is to set the intial scroll, enable transitions, and remove the obstructor*/
 
 function checkProjectViewLoad() {
     console.log("> checking project view loading");
@@ -174,6 +166,7 @@ function updateLoadingBar() {
 function onAllProjectViewsLoaded() {
     setInitialScroll();
     console.log("==== page loaded ====")
+    
 }
 
 /* The next few append functions take care of dynamic styling */
@@ -219,12 +212,7 @@ function appendProjectTitle(i) {
     projects[i].$sub.children(".project-title").attr("style", projects[i].titleStyle);
 }
 
-/* The appendProject... functions can only be called at the document's initial load,
-and puts the project's contents into the page skeleton. In the case of 
-appendProjectFull(), it will also load the project's content images. For either 
-appendPrject... functions, when all content/images are loaded, the project's view 
-will be marked as loaded, and checkProjectViewLoad() will check if all others are 
-also loaded*/
+/* The appendProject... functions can only be called at the document's initial load, and puts the project's contents into the page skeleton. In the case of  appendProjectFull(), it will also load the project's content images. For either appendPrject... functions, when all content/images are loaded, the project's view will be marked as loaded, and checkProjectViewLoad() will check if all others are also loaded */
 
 function appendProjectThumb(i) {
     // needed because $.get is async: by the time the request had succeeded, the index would change.
@@ -371,9 +359,7 @@ function appendProjectFull(i) {
     })
 }
 
-/* The replaceProjectTo... functions are the transition sequences from the 
-collapsed to the expanded form of a project. In the case of replaceProjectToFull(),
-it also takes care of loading the full project images if they aren't already there. '*/
+/* The replaceProjectTo... functions are the transition sequences from the collapsed to the expanded form of a project. In the case of replaceProjectToFull(), it also takes care of loading the full project images if they aren't already there. '*/
 
 function replaceProjectToThumb(i) {
     console.log("> replacing to thumb " + projects[i].name);
@@ -450,8 +436,7 @@ function enableTransitions() {
     $("style#transition-disable").remove();
 }
 
-/* The next few replace... functions take care of adjusting the url and title bar. 
-They are called by the viewProject() function */
+/* The next few replace... functions take care of adjusting the url and title bar. They are called by the viewProject() function */
 
 function replaceAddress(newAddress) {
     // avoids creating duplicate entries in history while navigating backwards
@@ -476,8 +461,7 @@ function replaceTitle(newActive) {
     }
 }
 
-/* The next get and set functions are utilities for navigating through project 
-indicies and active states */
+/* The next get and set functions are utilities for navigating through project indicies and active states */
 
 function getProjectFromName(name) {
     console.log("> getting project from name");
@@ -493,7 +477,12 @@ function getProjectFromName(name) {
 }
 
 function getAddressFromProject(i) {
-    return "/" + projects[i].name + "/";
+    if(i !== -1) {
+        return "/" + projects[i].name + "/";
+    } else {
+        return "/";
+    }
+    
 }
 
 function getProjectFromURL() {
@@ -524,8 +513,7 @@ function setActiveProject(newActive) {
     }
 }
 
-/* The viewProject() function is called whenever a project is clicked or when the 
-url is changed. It's role is to check to see if the project change is valid (is it already opened?) and to orchestrate the transitions that follow. '*/
+/* The viewProject() function is called whenever a project is clicked or when the url is changed. It's role is to check to see if the project change is valid (is it already opened?) and to orchestrate the transitions that follow. '*/
 function viewProject(newActive, originIsHistory) {
     console.log("> view request for " + (newActive !== -1 ? projects[newActive].name : "Index") + "(origin "+ (originIsHistory ? "" : "non-") + "history)");
     var active = getActiveProject();
@@ -657,11 +645,65 @@ window.onpopstate = function (event) {
     }
 }
 
+/* Below are functions that detect the project which the browser is over. It plays the same role as «hover» on the desktop layout. */
+
+/* updateOverProject is the call used for recursion. It is initially called in onAllProjectObjectsLoaded via updateOverProjectTimeout. It is used for recursive delayed scroll checking. */
+
+var updateOverProjectTimeout = null;
+var lastOverProject = -1;
+
+function updateOverProject() {
+    setOverProject(findOverProject());
+}
+
+/* findOverProject takes care of finding which project is in the middle of the screen. */
+
+function findOverProject() {
+    var scrollDistance = $(window).scrollTop();
+    var screenHeight = $(window).height();
+    var i = null;
+    $('.project').each(function(j) {
+        if ($(this).position().top <= scrollDistance + screenHeight/2) {
+            i = j;
+        }
+    });
+    if(i !== null) {
+        return i;
+    } else {
+        return -1;
+    }
+}
+
+/* setOverProject takes care of styling the middle project, unstyling the previous one, and recursion. */
+
+function setOverProject(newOverProject) {
+    if(newOverProject === -1) {
+        if(lastOverProject !== -1) {
+            $(projects[lastOverProject].$sub).removeClass("over");
+            $(projects[lastOverProject].$).removeClass("over");
+            console.log("== removed project Over styling");
+            lastOverProject = -1;
+        }
+    } else if(newOverProject !== lastOverProject) {
+        // activate Over project
+        if(lastOverProject !== -1) {
+            $(projects[lastOverProject].$sub).removeClass("over");
+            $(projects[lastOverProject].$).removeClass("over");
+        }
+        $(projects[newOverProject].$sub).addClass("over");
+        $(projects[newOverProject].$).addClass("over");
+        console.log("== set Over project styling on " + projects[newOverProject].name);
+        lastOverProject = newOverProject;
+    }
+    updateOverProjectTimeout = setTimeout(updateOverProject, 200);
+}
+
+/* broken for now
+
 $(window).resize(function() {
     resizeDebouncer();
 })
     
-/* broken for now
 var resizeTimeout;
     
 function resizeDebouncer() {

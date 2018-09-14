@@ -152,6 +152,7 @@ body {
     .top-content-sub-2 {
         /* used to crop out contact info */
         overflow: hidden;
+        
     }
 
     .top-image-sub {
@@ -161,6 +162,7 @@ body {
 
     .top-image-sub>img {
         width: inherit;
+        margin-bottom: -1rem;
     }
 
     .top-content-sub-3 {
@@ -439,6 +441,7 @@ body {
 
     .top-image-sub>img {
         width: inherit;
+        margin-bottom: -1rem;
     }
 
     .top-content-sub-3 {
@@ -545,7 +548,7 @@ body {
         transition: inherit;
     }
 
-    .project-sub:hover, .project-sub.full {
+    .project-sub:hover, .project-sub.over, .project-sub.full {
         cursor: pointer;
         margin-top: 0rem;
         padding-left: 40vw;
@@ -554,7 +557,7 @@ body {
     }
 
 
-    .project-sub:hover {
+    .project-sub:hover, .project-sub.over {
         padding-bottom: 4rem;
     }
 
@@ -570,7 +573,7 @@ body {
         transition: cubic-bezier(.4, -0.01, .21, 1) 0.5s;
     }
 
-    .project-sub:hover>.project-image-sub, .project-sub.full>.project-image-sub {
+    .project-sub:hover>.project-image-sub, .project-sub.over>.project-image-sub, .project-sub.full>.project-image-sub {
         transform: scale(1);
     }
 
@@ -592,7 +595,7 @@ body {
         font-size: 2rem;
     }
 
-    .project-sub:hover>.project-title, .project-sub.full>.project-title {
+    .project-sub:hover>.project-title, .project-sub.over>.project-title, .project-sub.full>.project-title {
         margin-top: -0.4rem;
         margin-bottom: .8rem;
     }
