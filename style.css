@@ -104,6 +104,10 @@ body {
     color: rgb(0, 0, 0);
 }
 
+a {
+    color: rgb(224, 107, 21);
+}
+
 @media (min-aspect-ratio: 4/5) {
     /* desktop ratio */
     
@@ -240,7 +244,7 @@ body {
         float: left;
         margin-left: 15vw;
         margin-right: 15vw;
-        margin-bottom: 15vw;
+        margin-bottom: 5vw;
         padding: 0.6rem;
     }
     
