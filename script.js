@@ -695,7 +695,7 @@ function setOverProject(newOverProject) {
         console.log("== set Over project styling on " + projects[newOverProject].name);
         lastOverProject = newOverProject;
     }
-    updateOverProjectTimeout = setTimeout(updateOverProject, 200);
+    updateOverProjectTimeout = setTimeout(updateOverProject, 100);
 }
 
 /* broken for now
