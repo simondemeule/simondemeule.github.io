@@ -1,5 +1,9 @@
 /* created by Simon Demeule */
 
+html, body { 
+    height: auto; 
+}
+
 html {
     font-family: Futura,Trebuchet MS,Arial,sans-serif; 
 }

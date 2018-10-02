@@ -397,12 +397,12 @@ function scrollToProjectCallback(i, callback) {
 }
 
 function setInitialScroll() {
-    console.log("> setting initial scroll")
+    console.log("> setting initial scroll");
     //disableTransitions();
     active = getActiveProject();
     if(active !== -1) {
         var top = Math.ceil(projects[getActiveProject()].$sub.offset().top);
-        $("body").scrollTop(top);
+        $("html,body").scrollTop(top);
     }
     enableTransitions();
     $(".obstructor").css("top", "-150vh");
@@ -539,7 +539,7 @@ function viewProject(newActive, originIsHistory) {
                         replaceTitle(newActive);
                         disableProjectTransitions(active);
                         replaceProjectToThumb(active);
-                        $("body").scrollTop(projects[newActive].$.offset().top);
+                        $("html,body").scrollTop(projects[newActive].$.offset().top);
                         enableProjectTransitions(active);
                     });
                 } else {
