@@ -575,7 +575,7 @@ a {
     }
     
     .project:last-of-type:not(.full) {
-        margin-bottom: 2rem;
+        margin-bottom: 8rem;
     }
 
     .project-sub {
