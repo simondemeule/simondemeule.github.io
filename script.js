@@ -1,4 +1,13 @@
-// created by simon demeule
+// created by Simon Demeule
+
+/* Note to anyone evaluating my coding skills here
+
+I wrote this in my first year at university, having barely learnt what object-oriented programming was, and having little clue what design patterns server-executed code was all about. The result is a really weird, non conventional, non optimal solution to a pretty standard problem.
+
+Here, rather than having the server automatically build the page for us from a database, the client is patching together a bunch of HTML files together into one. Because there is no server-side code, we have to specify where those files are, which is pretty unpractical. This also means extra wait time for the client.
+
+If I were to rewrite this (which is bound to happen sometime soon), I would take a much different route.
+*/
 
 /* TODO
 
@@ -89,7 +98,7 @@ function loadProjectObjects() {
 function checkProjectObjectLoad() {
     console.log("> checking project object loading");
     var totalProjectObjects = $(".project").length;
-    
+
     if(projects.length != totalProjectObjects) {
         console.log("| array incomplete");
         return;
@@ -166,7 +175,7 @@ function updateLoadingBar() {
 function onAllProjectViewsLoaded() {
     setInitialScroll();
     console.log("==== page loaded ====")
-    
+
 }
 
 /* The next few append functions take care of dynamic styling */
@@ -180,7 +189,7 @@ function appendProjectContentStyle(i) {
     console.log("> appending content style " + projects[i].name);
     var $style = $("#content-style");
     var contentHeight = projects[i].$contentsub2.children(".project-content").height()/rem;
-    var htmlString = 
+    var htmlString =
     "#" + projects[i].name + ">.project-sub.full>.project-content-sub-1>.project-content-sub-2 {\n"+
         "max-height:" + (contentHeight + 2) + "rem; \n" +
     "}\n" +
@@ -425,8 +434,8 @@ function enableProjectTransitions(i) {
 function disableTransitions() {
     console.log("> disabling transitions");
     var htmlString = "\n* {\n" +
-        "   -webkit-transition: none;\n" + 
-        "   transition: none;\n" + 
+        "   -webkit-transition: none;\n" +
+        "   transition: none;\n" +
         "\n}";
     $("<style>").prop("type", "text/css").html(htmlString).prop("id", "transition-disable").appendTo("head");
 }
@@ -482,7 +491,7 @@ function getAddressFromProject(i) {
     } else {
         return "/";
     }
-    
+
 }
 
 function getProjectFromURL() {
@@ -551,7 +560,7 @@ function viewProject(newActive, originIsHistory) {
                         enableProjectTransitions(active);
                     });
                 }
-                
+
                 if(!originIsHistory) {
                     replaceAddress(getAddressFromProject(newActive));
                 }
@@ -703,9 +712,9 @@ function setOverProject(newOverProject) {
 $(window).resize(function() {
     resizeDebouncer();
 })
-    
+
 var resizeTimeout;
-    
+
 function resizeDebouncer() {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(recalculateContentStyles
