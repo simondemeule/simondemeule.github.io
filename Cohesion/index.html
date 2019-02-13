@@ -1,0 +1,65 @@
+<!-- created by Simon Demeule -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cohesion</title>
+    </head>
+    <body>
+        <div class="obstructor" style="z-index: 3; position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: #fff"></div>
+
+        <img class="project-image" data-src="IMG_3911.jpg">
+
+        <div class="project-title">Cohesion</div>
+
+        <div class="project-content">
+            <div style="margin-bottom: 2rem; color: rgb(70, 22, 10); background-color: #fff">
+                <p>Cohesion is a collection of original musical works assembled over the past few years, which have converged towards a personal aesthetic defined by the borrowing of elements of electronic and classical music — the sound and techniques of music concrete, the simplicity of ambient electronic and minimalist classical, the chromaticism, ambiguity and unfamiliar harmonies of impressionist classical, along with more contemporary syncopation and rhythmical weirdness. (2018)</p>
+                <p>All tracks are instrumental, featuring cello and piano performed by myself, and modular synthesizer, field recordings and various sound objects. Some of the tracks feature Maxime Giard as a co-creator.</p>
+                <p>Above is my home studio, where most of the material was created.</p>
+            </div>
+            <iframe width="100%" height="300rem" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/684175335&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+            <div style="margin-top: 2rem; color: rgb(70, 22, 10); background-color: #fff">
+                <p>Music, sound art and music technology have been at the very center of my practice in the last few years, and I seek to pursue this passion in my career.</p>
+                <p>Below: the most beautiful thing I own, my cello.</p>
+            </div>
+            <img src="/Cohesion/1D8A1859thumb.jpg" data-src="/Cohesion/1D8A1859.jpg">
+        </div>
+        
+        <div class="title-style" style="color: #fff"></div>
+        
+        <div class="background-style" style="background-color: rgb(190, 52, 45);"></div>
+
+        <style>
+            .obstructor {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+
+                background-color: #fff;
+            }
+        </style>
+        <script>
+            function ajax(url, callback){
+                var xmlhttp;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        callback(xmlhttp.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+            
+            ajax("/index.html", function(data) {
+                document.open();
+                document.write(data);
+                document.close();
+            })
+        </script>
+    </body>
+</html>

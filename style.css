@@ -66,15 +66,6 @@ body {
     color: rgb(255, 255, 255);
 }
 
-.top-content-sub-1 {
-    background-color: rgb(5, 73, 103);
-}
-
-.top-content {
-    background-color: rgb(24, 152, 209);
-    color: rgb(255, 255, 255);
-}
-
 .top-contact-info {
     background-color: rgb(255, 255, 255);
     color: rgb(5, 73, 103);
@@ -114,6 +105,15 @@ a {
 
 @media (min-aspect-ratio: 4/5) {
     /* desktop ratio */
+    
+    .top-content-sub-1 {
+    background-color: rgb(5, 73, 103);
+    }
+
+    .top-content {
+        background-color: rgb(24, 152, 209);
+        color: rgb(255, 255, 255);
+    }
     
     html {
         font-size: 2vw;
@@ -401,6 +401,17 @@ a {
 
 @media (max-aspect-ratio: 4/5) {
     /* mobile ratio */
+    
+    .top-content-sub-1 {
+        background-color: rgb(24, 152, 209);
+        
+    }
+
+    .top-content {
+        background-color: rgb(5, 73, 103);
+        color: rgb(255, 255, 255);
+    }
+    
     html {
         font-size: 4vw;
     }
