@@ -1,0 +1,59 @@
+<!-- created by Simon Demeule -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Nakade</title>
+    </head>
+    <body>
+        <div class="obstructor" style="z-index: 3; position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: #fff"></div>
+
+        <img class="project-image" data-src="autonomX.png">
+
+        <div class="project-title">AutonomX</div>
+
+        <div class="project-content">
+            <div style="color: rgb(220, 220, 220); background-color: rgb(0, 0, 0)">
+                <p>AutonomX is an open source desktop application that allows artists and students to easily experiment with complex life-like algorithmic processes. A simple graphical interface allows exploration and prototyping, while support for the OSC protocol allows these systems to be integrated into digital art pieces and installations.</p>
+                <p>AutonomX is a work in progress by Concordia University's Xmodal laboratory; I integrated this team as lead backend architect and developper for the first development cycle.</p>
+                <p>You can explore the AutonomX's source code and download a compiled executable <a style="color: #56d4fa" href="https://github.com/Xmodal/autonomX">on the project's GitHub page</a>.</p>
+            </div>
+        </div>
+
+        <div class="title-style" style="color: rgb(0, 0, 0)"></div>
+
+        <div class="background-style" style="background-color: rgb(220, 220, 220);"></div>
+
+        <style>
+            .obstructor {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+
+                background-color: #fff;
+            }
+        </style>
+        <script>
+            function ajax(url, callback){
+                var xmlhttp;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        callback(xmlhttp.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+
+            ajax("/index.html", function(data) {
+                document.open();
+                document.write(data);
+                document.close();
+            })
+        </script>
+    </body>
+</html>
