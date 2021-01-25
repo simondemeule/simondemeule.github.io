@@ -1,0 +1,23 @@
+<!-- created by Simon Demeule -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+        <title>ART 6017</title>
+    </head>
+    <script>
+        function encodeImageFileAsURL(element) {
+            var file = element.files[0]
+            var reader = new FileReader()
+
+            reader.onloadend = function() {
+                console.log(reader.result)
+            }
+            reader.readAsDataURL(file)
+        }
+    </script>
+    <body>
+        <input type="file" onchange="encodeImageFileAsURL(this)" />
+    </body>
+</html>

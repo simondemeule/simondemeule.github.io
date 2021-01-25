@@ -1,0 +1,106 @@
+html, body { 
+    height: auto; 
+}
+
+/*
+@font-face {
+    font-family: Spartan;
+    src: url("Spartan-VariableFont_wght.ttf") format(truetype)
+}
+
+@font-face {
+    font-family: Antic;
+    src: url("AnticDidone-Regular.ttf") format(truetype)
+}
+*/
+
+#canvas {
+    z-index: -1;
+}
+
+.main.container {
+    margin-left: 12vw;
+    margin-right: 12vw;
+    margin-top: 6rem;
+}
+
+.main.headline {
+    display: inline-block;
+    font-family: Antic Didone;
+    font-size: 3rem;
+    color: #FFFFFF;
+    padding: 0.7rem;
+    margin-bottom: 3rem;
+}
+
+.tab.group {
+    font-size: 0; /* fix for newlines beteen tab divs being parsed as whitespace and causing a space to appear */
+}
+
+.tab.instance {
+    font-family: Spartan;
+    color: #FFFFFF;
+    padding: 0.6rem;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin: 0;
+    transition: background-color cubic-bezier(.54, 0, .43, 1) 0.2s;
+    cursor: pointer;
+}
+
+.tab.instance:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.tab.selected {
+    background-color: #FF2200;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+}
+
+.tab.underline {
+    background-color: #FF2200;
+    height: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.content.whole {
+    margin-bottom: 6rem;
+}
+
+.content.headline {
+    display: inline-block;
+    font-family: Antic Didone;
+    font-size: 3rem;
+    color: #FFFFFF;
+    padding: 0.7rem;
+    margin: 0;
+}
+
+.content.block {
+    background-color: #FFFFFF;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+.content.block>p {
+    font-family: Spartan;
+    font-size: 1rem;
+    color: #000000;
+    padding: 0.7rem;
+    margin: 0;
+}
+
+.content.quote {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    font-family: Antic Didone;
+    font-size: 1.6rem;
+    color: #FFFFFF;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+    padding-top: 1.8rem;
+    padding-bottom: 1.8rem;
+}
