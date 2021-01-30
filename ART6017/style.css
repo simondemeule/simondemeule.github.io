@@ -14,8 +14,16 @@ html, body {
 }
 */
 
-#canvas {
+body {
+    background-image: url(backdrop.jpg);
+    background-size: auto;
     z-index: -1;
+}
+
+.invert.background {
+    mix-blend-mode: difference;
+    background-color: #FFFFFF;
+    z-index: 0;
 }
 
 .main.container {
@@ -24,13 +32,17 @@ html, body {
     margin-top: 6rem;
 }
 
-.main.headline {
+.main.headline.wrapper {
+    margin-bottom: 3rem;
+}
+
+.main.headline.text {
     display: inline-block;
     font-family: Antic Didone;
     font-size: 3rem;
-    color: #FFFFFF;
+    color: #000000;
     padding: 0.7rem;
-    margin-bottom: 3rem;
+    z-index: 1;
 }
 
 .tab.group {
