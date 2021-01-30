@@ -49,8 +49,8 @@ html, body {
 }
 
 .tab.instance:hover {
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color: #000000;
+    color: #FFFFFF;
 }
 
 .tab.selected {
