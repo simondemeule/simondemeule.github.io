@@ -49,7 +49,7 @@ html, body {
 }
 
 .tab.instance:hover {
-    background-color: #000000;
+    background-color: #FF2200;
     color: #FFFFFF;
 }
 
@@ -82,6 +82,7 @@ html, body {
     background-color: #FFFFFF;
     padding-top: 0.6rem;
     padding-bottom: 0.6rem;
+    margin-bottom: 2rem;
 }
 
 .content.block>p {
@@ -93,14 +94,57 @@ html, body {
 }
 
 .content.quote {
-    margin-top: 2rem;
     margin-bottom: 2rem;
     display: inline-block;
     font-family: Antic Didone;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: #FFFFFF;
     padding-left: 1.2rem;
     padding-right: 1.2rem;
     padding-top: 1.8rem;
     padding-bottom: 1.8rem;
+}
+
+.content:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.content.frame {
+    clear: left;
+    float: left;
+}
+
+.content.frame.title {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+    padding: 0.6rem;
+    font-family: Antic Didone;
+    font-size: 1.4rem;
+    color: #FF2200;
+    border-color: #FF2200;
+    border-width: 0.12rem;
+    border-style: solid;
+}
+
+.content.frame.title.stacked {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.content.frame.card {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+    margin-bottom: 0.9rem;
+    padding: 0.8rem;
+    font-family: Antic Didone;
+    font-weight: 300;
+    font-size: 1rem;
+    color: #FF2200;
+    border-color: #FF2200;
+    border-width: 0.12rem;
+    border-style: solid;
 }
