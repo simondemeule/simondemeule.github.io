@@ -16,6 +16,8 @@ html, body {
 
 #canvas {
     z-index: -1;
+    filter: blur(50px);
+    transition: filter cubic-bezier(.34,0,.26,1) 0.5s;
 }
 
 .main.container {
