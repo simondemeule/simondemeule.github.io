@@ -1,3 +1,21 @@
+// ideas for improvement
+
+// canvas just isn't good enough for smooth parallax with relatively large images and masking it seems...
+
+// compromise a bit... (this would likely always hit that sweet 60fps...)
+// - kill the parallax
+// - kill the clipping masks
+// - have the background as an HTML element
+// - draw the foreground components directly and use alpha to compose
+
+// go all in (and probably cry a lot because the web is terrible and nothing ever works :'( )
+// - WebGL
+// - maybe ditch the images and use perlin noise? no waiting for image loads, can animate procedurally, shader program go brr brr
+
+// about the site navigation
+// - need to eliminate image re-loading
+// - kill the main container and inject whatever the clicked page has at that element (this sounds like an absolutely idiotic idea security-wise)
+
 function View() {
     let view = this
 
@@ -119,6 +137,8 @@ function View() {
     }
 
     this.updateCanvasSize = function() {
+        view.isDirtyCanvasSize = false
+
         if(view.canvas !== undefined) {
             view.canvas.style.width = window.innerWidth + "px"
             view.canvas.style.height = window.innerHeight + "px"
@@ -130,6 +150,8 @@ function View() {
     }
 
     this.updatePositionsGlobal = function() {
+        view.isDirtyPositionsGlobal = false
+
         view.ratioClient = window.innerWidth / window.innerHeight
 
         if(view.imageBackgroundCurrent != null) {
@@ -164,7 +186,10 @@ function View() {
     }
 
     this.updatePositionsVertical = function() {
+        view.isDirtyPositionsVertical = false
+
         view.parallaxFactor = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)
+
         if(isNaN(view.parallaxFactor)) {
             // this happens if the page can't be scrolled through
             view.parallaxFactor = 0
@@ -183,52 +208,34 @@ function View() {
         if(model.isReady && view.isReadyContext) {
             if (view.isDirtyCanvasSize) {
                 view.updateCanvasSize()
-                view.isDirtyCanvasSize = false
                 view.isDirty = true
             } if (view.isDirtyPositionsGlobal) {
                 view.updatePositionsGlobal()
-                view.isDirtyPositionsGlobal = false
                 view.isDirty = true
             } else if (view.isDirtyPositionsVertical) {
                 view.updatePositionsVertical()
-                view.isDirtyPositionsVertical = false
                 view.isDirty = true
             }
 
             if (view.isDirty) {
                 view.isDirty = false
 
+                // clear background
                 view.context.fillStyle = "#000000"
-
                 view.context.fillRect(0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
 
+                // draw background image
                 if(view.imageBackgroundCurrent != null) {
                     view.context.drawImage(view.imageBackgroundCurrent, view.imageBackgroundRect.x, view.imageBackgroundRect.y, view.imageBackgroundRect.width, view.imageBackgroundRect.height)
-                }
+                    // view.context.drawImage(view.imageBackgroundCurrent, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
+                }     
 
-                // setup clipping window
+                // setup clipping mask
                 view.context.save()
-
                 view.context.beginPath()
                 
-                for(let i = 0; i < model.tabs.length; i++) {
-                    rect = model.tabs[i].getBoundingClientRect()
-
-                    if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
-                        view.context.rect(rect.x * view.pixelRatio, rect.y * view.pixelRatio, rect.width * view.pixelRatio, rect.height * view.pixelRatio)
-                    }
-                }
-
-                for(let i = 0; i < model.headlines.length; i++) {
-                    rect = model.headlines[i].getBoundingClientRect()
-
-                    if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
-                        view.context.rect(rect.x * view.pixelRatio, rect.y * view.pixelRatio, rect.width * view.pixelRatio, rect.height * view.pixelRatio)
-                    }
-                }
-
-                for(let i = 0; i < model.quotes.length; i++) {
-                    rect = model.quotes[i].getBoundingClientRect()
+                for(let i = 0; i < model.targets.length; i++) {
+                    rect = model.targets[i].getBoundingClientRect()
 
                     if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
                         view.context.rect(rect.x * view.pixelRatio, rect.y * view.pixelRatio, rect.width * view.pixelRatio, rect.height * view.pixelRatio)
@@ -236,16 +243,17 @@ function View() {
                 }
 
                 view.context.closePath()
-
                 view.context.clip()
 
+                // draw foreground image
                 if(view.imageForegroundCurrent != null) {
                     view.context.drawImage(view.imageForegroundCurrent, view.imageForegroundRect.x, view.imageForegroundRect.y, view.imageForegroundRect.width, view.imageForegroundRect.height)
+                    // view.context.drawImage(view.imageForegroundCurrent, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
                 }
 
                 view.context.restore()
             } else {
-                // do something that forces safari to not unprioritize canvas ???
+                // TODO: do something that forces Safari to not put canvas in lazy mode ???
             }
         }
     }
@@ -257,23 +265,18 @@ function Model() {
     this.isReady = false
 
     this.initialize = function() {
-        model.tabs = document.getElementsByClassName("tab instance")
-        model.headlines = document.getElementsByClassName("headline")
-        model.quotes = document.getElementsByClassName("content quote")
+        model.targets = document.querySelectorAll(".headline, .content.quote, .tab.instance")
         model.isReady = true
     }
-
-    // TODO: update method for parallax offsets
 }
 
 function Controller() {
     let controller = this
 
-    this.initialized = false
-
     this.initialize = function() {
         controller.view = new View()
         controller.view.initialize()
+
         controller.model = new Model()
         controller.model.initialize()
 
@@ -283,7 +286,7 @@ function Controller() {
         window.onresize = function() {
             controller.view.handleResize()
         }
-       window.requestAnimationFrame(controller.update)
+        window.requestAnimationFrame(controller.update)
     }
 
     this.update = function() {
