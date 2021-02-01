@@ -4,12 +4,23 @@ function View() {
     let canvas = this.canvas
     let context = this.context
 
-    this.lastWidth = 0
-    this.lastHeight = 0
-
     this.parallaxStrengthBackground = 0.3
     this.parallaxStrengthForeground = 0.6
     this.parallaxFactor = 0
+
+    this.ratioClient = 0
+    this.ratioForegroundEffective = 0
+    this.ratioBackgroundEffective = 0
+    this.imageForegroundRect = {}
+    this.imageForegroundRect.x = 0
+    this.imageForegroundRect.y = 0
+    this.imageForegroundRect.width = 0
+    this.imageForegroundRect.height = 0
+    this.imageBackgroundRect = {}
+    this.imageBackgroundRect.x = 0
+    this.imageBackgroundRect.y = 0
+    this.imageBackgroundRect.width = 0
+    this.imageBackgroundRect.height = 0
 
     this.isReadyContext = false
     this.isReadyImageBackground = false
@@ -17,6 +28,22 @@ function View() {
     this.isReadyImageBackgroundTemp = false
     this.isReadyImageForegroundTemp = false
 
+    this.imageForegroundCurrent = null
+    this.imageBackgroundCurrent = null
+
+    // marks canvas size as due for change
+    // this causes a call which cascades through all methods called by dirty flags below
+    this.isDirtyCanvasSize = false
+
+    // marks global image positions for recalculation on next animation frame
+    // this causes a call which cascades through all methods called by dirty flags below
+    this.isDirtyPositionsGlobal = true
+
+    // marks vertical image positions for recalculation on next animation frame
+    // this causes a call which cascades through all methods called by dirty flags below
+    this.isDirtyPositionsVertical = true
+
+    // marks canvas for redraw on next animation frame
     this.isDirty = true
 
     // initialize
@@ -30,25 +57,19 @@ function View() {
 
         view.imageBackground.onload = function() {
             view.isReadyImageBackground = true
-            view.isDirty = true
-            if(view.isReadyImageForeground) {
-                view.unBlur()
-            }
+            view.handleImageLoad()
         }
         view.imageForeground.onload = function() {
             view.isReadyImageForeground = true
-            view.isDirty = true
-            if(view.isReadyImageBackground) {
-                view.unBlur()
-            }
+            view.handleImageLoad()
         }
         view.imageBackgroundTemp.onload = function() {
             view.isReadyImageBackgroundTemp = true
-            view.isDirty = true
+            view.handleImageLoad()
         }
         view.imageForegroundTemp.onload = function() {
             view.isReadyImageForegroundTemp = true
-            view.isDirty = true
+            view.handleImageLoad()
         }
 
         view.imageBackground.src = "background.jpg"
@@ -57,172 +78,175 @@ function View() {
         view.imageForegroundTemp.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAAAuCAIAAAAEIshXAAAJ5klEQVRogY1a2XKbMBRFQuzYiTvN9KH//2+dPgQnsc0moAMHjq8l3FadSbERks5dzl2wCrahlIqiKM/zIAjCMIyiSG0DM6ZpCsTg90op3uKXWGSapnEb0zJ4MU0TJmutwzDE3yiKkiSJ4/jl5eV0Oh2PR2NMXdfn8/lyuTRNM44jHomiKI7jKIqMMVmWlWVZFEWWZWEY4qiGB9Jap2mqtVZKGWPwjVKK58M5gIEAtNYOJIkNE4CBSDiHwHgADGCDZIdh6LquX8YwDNbaIAiMMVprgnR2xF6Gn9M0xVrcJgxDXCxgVBDc4fE0wePgTP+W1Pk0BTAG7sUdwzA0xiRJAtlba/u+t9YC1TAMWCQMw2EYgA0rj+M4DAMPZvBfGIZpmmIt7AGlcW+l5hNDe88hBeM4biq87wfDexRq8PhR0RrjOE63AWAwZbkUMOAjdrHLGIYB+rwDy/M8iiLMIypqeZomXDvn47reudeZ2EnepQlhAA/2ipaRZVmxjCiKrLWTGHJfqo6YrbVt24ZhOI5jHMcGHpXnuXQbovK9gq5CVBISLIFb+hMkKm4Bn4G6kiRJ03Q+mTFQl2NyjkCpQ7gfHGf2MaVUWZawMZzYGANBkhgWA3u4xk5KKXnQaWMJX3UOcrmg3DRJkizL8jyP45gnllsopR0HxhbQofxo6KkkGbivoI1A2iFFgF25+qqfYVDb0R2hCifUdHFSEdyMjB9FUd/3EhXOEwTj9pzyBQdsGLOP1XUdBEEcx1gdwqO98WEsR8WCgihU3NKCOqTv8YLaxhYcFCiMENNA8XCnDdh6DNgU15FGjiOZYRhut5u1tlyGXJfAZLyivyLI4C/mE4nEQ6FIDcvViJDYsJq1FhGMeoCqZcSjl3J9rTVOZXAgOGgYhnmeJ0lCbpVCdTiAbg29SQbjBr7qpD6lBiQ2WHu/DZKHpDSKgPAo05WQ+Llt26qqkmXA5aRlUsY8PSwExGWtxSMQB0IKBek4A/FM08QcAMNsA7rqug4BGtj8mTieMQ/50z1AA+U4jm3b/v79OwiC0+mE20htkJJJ+pbRg84AHVprZXrpQ5KExgtKMIoiaFuuSYNiosgcBX8xTXqNkc49jmNd11VVpWkKvSFiZllmjHHIAPphygMt4brrujUTXWLRuv7yz2FqXsgYTU6ijzzQ3WZBhMfgKX3HBI9jmqamaW63G1AhthyPR2bNPBB2BTBpOUQFm2RaFOhABUomxA4NQPbIVx0eovHHccxqgN4lbQEW6wJjHtT3PRk2SZI8z/EkQxBpk4rquq5dxvV69SnHyR4kWxAeRck8K/DGyiJ3LrznfaAconU1Rgpm0lgUhU9BMruHZvq+b9u2aRo4pMRmrWU8kIzPiAwCACpJCXI7przzxTjpSDvGzJxmR2Mrn2z2wIgps/7dGIIVoTfkDZK+WXfwcNwIspNVI6DGy8A3CCTS3hhRWKrIBHAHGL4CVUCcLNIkDGfgVhQaZkNEZYyBfXZdB2AyPFJj8TagNKwDAmvblkTP3E1GRZkYSAN2NRaGYVEU3DXPc5kZ+M5zZ3YVhDqEXGRRV9d1FEVt21JpsEyGI2b0SOqhJXyTZVnXdTJHdUpBp8sgw70LjIQLPmSzwDE8BxWFhxPIxkm9DOgNeS2okqYeRREwABu8K0mSoijqugYwRDYo3CkLHuq0cVTbXSNPqZRC+EKUgDFopdVTM9whLpw4z3OcD6jwl90LWiPkCBhlWcIL8H1RFF3XAQkUTu052TDzYFmZP2hMaw3bg90XRTH7d3hnZB/VMx3CP40xaZoCDMRPbNJAUIYVRQGxslVxOByQdjXLMMYgj2N3ALUpGEGqRwDbQkGSJBQkulmekgjr3mnyVYcp8BmYUFmWoM2maWCTNFckqFmWyW4SeoEgz7qu4zjGg+xYAaTWOo7jpYH0cIAtfdw6H0mS0O7hYLumiGckql29yW4Xc0ueTNa1sBHYIXMDlogIOVAd8LACZLx10pS7KWqtD4cDY1eWZbODbebn2+EzN3NaiDIV5OIO7zNLclZj64qWBhtm9cC6KUkSTACqvu8NBUynQr8SfSIHjw/vLxpzJkiEviyetVxBY0jK2rYFKnba6K5QqewuGiaRh8MBrUWwvIxgz4Z/Jl9j/gQfuV+GOtNIfdba2dO6+R/TmiAI4EEEtmoMSn99fWUMkcCksJ+py8e2C4bFiKw1fCS71zA8xIy2a2GKWuuu68hSrsbQgSvLknkAGmBO9uXAewbAOSgHCiKYE+v0Z8/6CGWVBGvELdS1oHEAw7Jr7+3t7Q0cCOgIQdIZHGBOBHs8H9r3LuC+76uqulwuWuuyLA+HA6ohf5FdVNSG9DFcyE4Jevoz3f/8+TMMw+/fv8M8kI0igvFFiaOBv6JC7HAFP03T9Xr99etXXddoaSA6I2w6upKbymu2j9hvZCiTZRQo1Pz48YNtgzWkmEiWKr7SfCP0sLlKHoahqqr39/emaZIkGYbBGFOWJWn62XBSXsYJmQEj+skFZiBUIj7P0XBm+9inrF2i24Xka7hpmqqqvr6+4CFKqaZp4Cf+eLYmSj5Zp8iKxhmGTTkkLyxpt9muw/g63B0KXfZN0pfL5ePjo21b5h/szzmCcIxfCshRF+9KR+XdtSm3UuSWcwAY3uI5u+ClwD+BBXh3sEyw1lZVhUY636qgTvFX2BWcpBDHUqRBsVO0vm1hEETChmDnGPd9IW/73SEn3G63j4+PruvYCMjz/PX19Z8O5sBgP1ji9DW2plQ0CeSgiDBMnXwH+x9Ucto4jl9fX9frFf6AouHl5QX5gC84fwW/pnS0BGpgm8haO3OvTJBhITI0/wWJVL13804tXdedz+fr9YqOALCVZYk3sf8poPFxOG8VUc6wS9V13QwMT0JdTmh2JOTD4+l3MyN8f71e4WCIm/gLo/Bl5C/iv7+U55EJAxuBSLtW8mAy5TvY7mYcu5gJrO/78/n8+fmJqp4AWFA+W3l/o+23BswcyAiYQ75dWRG0AXXBDnky+ZrUkaJvilLwDF8fHx+3263vewacuSyKYk9oLgzpYOsWS2krf2IAHkLUla8g16YQ+Bfo0dmjs/Jt7a7qfBOShjEMw+fn5/l8ZhOGDhYnT4H5upJ2gaQPFQo6NIfDAQ0/+ZZvDsXIngCMDua4je9FzzaWh8MLN2QbK6pwbpifTifIWNKdLyNnoOJEMcX36Mfj8e3tbe55LHKkHc7JBpN6/ghBFhqOKe6C2S0rh2G4XC5VVV2v17vRx9HxeCzL0vlhz/+UP1rrLMtOpxOaykgAT6fTt2/fWGIyoZlZA8Ljr7PYe5Bh/pks/8IcXddVVXU+n9t2LQpph/+My7u7GGOOx2OapuzAoThGcxaokIUqpd7f3/8ALpA+Rr4RdqsAAAAASUVORK5CYII="
     }
 
-    this.unBlur = function() {
-        view.canvas.style.filter = "blur(0px)"
+    this.handleImageLoad = function() {
+        if(view.isReadyImageForeground && view.isReadyImageBackground) {
+            view.canvas.style.filter = "blur(0px)"
+            view.imageBackgroundCurrent = view.imageBackground
+            view.imageForegroundCurrent = view.imageForeground
+        }
+        view.isDirtyPositionsGlobal = true
     }
 
-    // set as dirty
-    this.invalidate = function() {
-        view.isDirty = true
+    this.handleScroll = function() {
+        view.isDirtyPositionsVertical = true
+    }
+
+    this.handleResize = function() {
+        view.isDirtyCanvasSize = true
     }
 
     // creates context
     this.createContext = function() {
         view.canvas = document.getElementById('canvas')
         view.context = view.canvas.getContext('2d')
-        view.pixelRatio = view.getPixelRatio()
-
-        view.updateScalingSubroutine()
+        
+        view.updatePixelRatio()
+        view.updateCanvasSize()
 
         // TODO: figure out proper handlers for canvas context load completion
         view.isReadyContext = true
     }
 
     // get pixel ratio
-    this.getPixelRatio = function() {
+    this.updatePixelRatio = function() {
         var backingStore = view.context.backingStorePixelRatio ||
             view.context.webkitBackingStorePixelRatio ||
             view.context.mozBackingStorePixelRatio ||
             view.context.msBackingStorePixelRatio ||
             view.context.oBackingStorePixelRatio ||
             view.context.backingStorePixelRatio || 1
-        return (window.devicePixelRatio || 1) / backingStore
+        view.pixelRatio = (window.devicePixelRatio || 1) / backingStore
     }
 
-    // update the scaling of view elements, but only if the window dimensions have changed
-    this.updateScaling = function(model = null) {
-        let width = window.innerWidth
-        let height = window.innerHeight
-
-        if(view.lastWidth !== width || view.lastHeight !== height) {
-            view.isDirty = true
-
-            view.lastWidth = width
-            view.lastHeight = height
-
-            view.updateScalingSubroutine()
-        }
-    }
-
-    // update the scaling of view elements
-    this.updateScalingSubroutine = function() {
+    this.updateCanvasSize = function() {
         if(view.canvas !== undefined) {
             view.canvas.style.width = window.innerWidth + "px"
             view.canvas.style.height = window.innerHeight + "px"
             view.canvas.width = view.pixelRatio * window.innerWidth
             view.canvas.height = view.pixelRatio * window.innerHeight
         }
-        view.updateParallax()
+
+        view.updatePositionsGlobal()
     }
 
-    this.updateParallax = function() {
+    this.updatePositionsGlobal = function() {
+        view.ratioClient = window.innerWidth / window.innerHeight
+
+        if(view.imageBackgroundCurrent != null) {
+            view.ratioBackgroundEffective = view.imageBackgroundCurrent.width / (view.imageBackgroundCurrent.height / (1 + view.parallaxStrengthBackground))
+
+            if(view.ratioClient < view.ratioBackgroundEffective) {
+                view.imageBackgroundRect.height = window.innerHeight * view.pixelRatio * (1 + view.parallaxStrengthBackground)
+                view.imageBackgroundRect.width = view.imageBackgroundRect.height * view.imageBackgroundCurrent.width / view.imageBackgroundCurrent.height
+                view.imageBackgroundRect.x = - (view.imageBackgroundRect.width - window.innerWidth * view.pixelRatio) / 2
+            } else {
+                view.imageBackgroundRect.width = window.innerWidth * view.pixelRatio
+                view.imageBackgroundRect.height = view.imageBackgroundRect.width * view.imageBackgroundCurrent.height / view.imageBackgroundCurrent.width
+                view.imageBackgroundRect.x = - (view.imageBackgroundRect.width - window.innerWidth * view.pixelRatio) / 2
+            }
+        }
+
+        if(view.imageForegroundCurrent != null) {
+            view.ratioForegroundEffective = view.imageForegroundCurrent.width / (view.imageForegroundCurrent.height / (1 + view.parallaxStrengthForeground))
+        
+            if(view.ratioClient < view.ratioForegroundEffective) {
+                view.imageForegroundRect.height = window.innerHeight * view.pixelRatio * (1 + view.parallaxStrengthForeground)
+                view.imageForegroundRect.width = view.imageForegroundRect.height * view.imageForegroundCurrent.width / view.imageForegroundCurrent.height
+                view.imageForegroundRect.x = - (view.imageForegroundRect.width - window.innerWidth * view.pixelRatio) / 2
+            } else {
+                view.imageForegroundRect.width = window.innerWidth * view.pixelRatio
+                view.imageForegroundRect.height = view.imageForegroundRect.width * view.imageForegroundCurrent.height / view.imageForegroundCurrent.width
+                view.imageForegroundRect.x = - (view.imageForegroundRect.width - window.innerWidth * view.pixelRatio) / 2
+            }
+        }
+
+        view.updatePositionsVertical()
+    }
+
+    this.updatePositionsVertical = function() {
         view.parallaxFactor = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)
         if(isNaN(view.parallaxFactor)) {
             // this happens if the page can't be scrolled through
             view.parallaxFactor = 0
         }
+
+        if(view.imageBackgroundCurrent != null) {
+            view.imageBackgroundRect.y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthBackground * view.parallaxFactor
+        }
+        if(view.imageForegroundCurrent != null) {
+            view.imageForegroundRect.y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthForeground * view.parallaxFactor
+        }
     }
 
     // render!
     this.renderModel = function(model) {
-        if(model.isReady && view.isReadyContext && view.isDirty) {
-            // TODO: move calculations to model
-            
-            let image = null
-            if(view.isReadyImageBackground) {
-                image = view.imageBackground
-            } else if(view.isReadyImageBackgroundTemp) {
-                image = view.imageBackgroundTemp
+        if(model.isReady && view.isReadyContext) {
+            if (view.isDirtyCanvasSize) {
+                view.updateCanvasSize()
+                view.isDirtyCanvasSize = false
+                view.isDirty = true
+            } if (view.isDirtyPositionsGlobal) {
+                view.updatePositionsGlobal()
+                view.isDirtyPositionsGlobal = false
+                view.isDirty = true
+            } else if (view.isDirtyPositionsVertical) {
+                view.updatePositionsVertical()
+                view.isDirtyPositionsVertical = false
+                view.isDirty = true
             }
 
-            if(image != null) {
-                let ratioClient = window.innerWidth / window.innerHeight
-                let ratioImageEffective = image.width / (image.height / (1 + view.parallaxStrengthBackground))
+            if (view.isDirty) {
+                view.isDirty = false
 
-                let x = 0
-                let y = 0
-                let width = 0
-                let height = 0
-                if(ratioClient < ratioImageEffective) {
-                    height = window.innerHeight * view.pixelRatio * (1 + view.parallaxStrengthBackground)
-                    width = height * image.width / image.height
-                    x = - (width - window.innerWidth * view.pixelRatio) / 2
-                    y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthBackground * view.parallaxFactor
-                } else {
-                    width = window.innerWidth * view.pixelRatio
-                    height = width * image.height / image.width
-                    x = - (width - window.innerWidth * view.pixelRatio) / 2
-                    y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthBackground * view.parallaxFactor
+                view.context.fillStyle = "#000000"
+
+                view.context.fillRect(0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
+
+                if(view.imageBackgroundCurrent != null) {
+                    view.context.drawImage(view.imageBackgroundCurrent, view.imageBackgroundRect.x, view.imageBackgroundRect.y, view.imageBackgroundRect.width, view.imageBackgroundRect.height)
                 }
-                view.context.drawImage(image, x, y, width, height)
-            }
 
-            // setup clipping window
-            view.context.save()
+                // setup clipping window
+                view.context.save()
 
-            view.context.beginPath()
-            
-            for(let i = 0; i < model.tabs.length; i++) {
-                rect = model.tabs[i].getBoundingClientRect()
+                view.context.beginPath()
+                
+                for(let i = 0; i < model.tabs.length; i++) {
+                    rect = model.tabs[i].getBoundingClientRect()
 
-                if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
-                    view.context.rect(Math.ceil(rect.x * view.pixelRatio), Math.ceil(rect.y * view.pixelRatio), Math.ceil(rect.width * view.pixelRatio), Math.ceil(rect.height * view.pixelRatio))
+                    if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
+                        view.context.rect(rect.x * view.pixelRatio, rect.y * view.pixelRatio, rect.width * view.pixelRatio, rect.height * view.pixelRatio)
+                    }
                 }
-            }
 
-            for(let i = 0; i < model.headlines.length; i++) {
-                rect = model.headlines[i].getBoundingClientRect()
+                for(let i = 0; i < model.headlines.length; i++) {
+                    rect = model.headlines[i].getBoundingClientRect()
 
-                if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
-                    view.context.rect(Math.ceil(rect.x * view.pixelRatio), Math.ceil(rect.y * view.pixelRatio), Math.ceil(rect.width * view.pixelRatio), Math.ceil(rect.height * view.pixelRatio))
+                    if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
+                        view.context.rect(rect.x * view.pixelRatio, rect.y * view.pixelRatio, rect.width * view.pixelRatio, rect.height * view.pixelRatio)
+                    }
                 }
-            }
 
-            for(let i = 0; i < model.quotes.length; i++) {
-                rect = model.quotes[i].getBoundingClientRect()
+                for(let i = 0; i < model.quotes.length; i++) {
+                    rect = model.quotes[i].getBoundingClientRect()
 
-                if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
-                    view.context.rect(Math.ceil(rect.x * view.pixelRatio), Math.ceil(rect.y * view.pixelRatio), Math.ceil(rect.width * view.pixelRatio), Math.ceil(rect.height * view.pixelRatio))
+                    if(rect.x + rect.width >= 0 && rect.x <= window.innerWidth && rect.y + rect.height >= 0 && rect.y <= window.innerHeight) {
+                        view.context.rect(rect.x * view.pixelRatio, rect.y * view.pixelRatio, rect.width * view.pixelRatio, rect.height * view.pixelRatio)
+                    }
                 }
-            }
 
-            view.context.closePath()
+                view.context.closePath()
 
-            view.context.clip();
+                view.context.clip()
 
-            image = null
-            if(view.isReadyImageForeground) {
-                image = view.imageForeground
-            } else if(view.isReadyImageForegroundTemp) {
-                image = view.imageForegroundTemp
-            }
-
-            if(image != null) {
-                let ratioClient = window.innerWidth / window.innerHeight
-                let ratioImageEffective = image.width / (image.height / (1 + view.parallaxStrengthForeground))
-
-                let x = 0
-                let y = 0
-                let width = 0
-                let height = 0
-                if(ratioClient < ratioImageEffective) {
-                    height = window.innerHeight * view.pixelRatio * (1 + view.parallaxStrengthForeground)
-                    width = height * image.width / image.height
-                    x = - (width - window.innerWidth * view.pixelRatio) / 2
-                    y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthForeground * view.parallaxFactor
-                } else {
-                    width = window.innerWidth * view.pixelRatio
-                    height = width * image.height / image.width
-                    x = - (width - window.innerWidth * view.pixelRatio) / 2
-                    y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthForeground * view.parallaxFactor
+                if(view.imageForegroundCurrent != null) {
+                    view.context.drawImage(view.imageForegroundCurrent, view.imageForegroundRect.x, view.imageForegroundRect.y, view.imageForegroundRect.width, view.imageForegroundRect.height)
                 }
-                view.context.drawImage(image, x, y, width, height)
+
+                view.context.restore()
+            } else {
+                // do something that forces safari to not unprioritize canvas ???
             }
-
-            view.context.restore()
-
-            // this is gross, performance wise, but safari lags unacceptably when the view becomes dirty again, dropping way too many frames
-            //view.isDirty = false
         }
     }
 }
@@ -254,21 +278,17 @@ function Controller() {
         controller.model.initialize()
 
         window.onscroll = function() {
-            controller.view.invalidate()
-            controller.view.updateParallax()
+            controller.view.handleScroll()
         }
-        /*
-        window.onmousemove = function() {
-            controller.view.invalidate()
+        window.onresize = function() {
+            controller.view.handleResize()
         }
-        */
-        window.requestAnimationFrame(controller.update)
+       window.requestAnimationFrame(controller.update)
     }
 
     this.update = function() {
-        controller.view.updateScaling()
         controller.view.renderModel(controller.model)
-        window.requestAnimationFrame(controller.update);
+        window.requestAnimationFrame(controller.update)
     }
 }
 
