@@ -2,6 +2,8 @@
 
 // canvas just isn't good enough for smooth parallax with relatively large images and masking it seems...
 
+// try to prescale the image using an img or an off-screen canvas
+
 // compromise a bit... (this would likely always hit that sweet 60fps...)
 // - kill the parallax
 // - kill the clipping masks
@@ -99,6 +101,9 @@ function View() {
     this.handleImageLoad = function() {
         if(view.isReadyImageForeground && view.isReadyImageBackground) {
             view.canvas.style.filter = "blur(0px)"
+            setTimeout(function() {
+                view.canvas.style.filter = "none"
+            }, 600)
             view.imageBackgroundCurrent = view.imageBackground
             view.imageForegroundCurrent = view.imageForeground
         }
