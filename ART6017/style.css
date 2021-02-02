@@ -147,6 +147,14 @@ html, body {
     border-style: solid;
 }
 
+.content.frame.card a {
+    background-color: #FF2200;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-style: italic;
+    padding: 0.2rem;
+}
+
 .content.mono {
     padding: 1.2rem;
     border-color: #FF2200;
