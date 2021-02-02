@@ -100,7 +100,7 @@ function View() {
 
     this.handleImageLoad = function() {
         if(view.isReadyImageForeground && view.isReadyImageBackground) {
-            view.canvas.style.filter = "blur(0px)"
+            view.canvas.style.filter = "blur(0px) brightness(100%)"
             setTimeout(function() {
                 view.canvas.style.filter = "none"
             }, 600)
@@ -112,6 +112,9 @@ function View() {
             }
             if(view.isReadyImageForegroundTemp) {
                 view.imageForegroundCurrent = view.imageForegroundTemp
+            }
+            if(view.isReadyImageBackgroundTemp && view.isReadyImageForegroundTemp) {
+                view.canvas.style.filter = "blur(50px) brightness(100%)"
             }
         }
         view.isDirtyPositionsGlobal = true
