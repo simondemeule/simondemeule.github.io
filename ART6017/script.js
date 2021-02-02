@@ -212,8 +212,6 @@ function View() {
             view.parallaxFactor = 0
         }
 
-        console.log(view.parallaxFactor)
-
         if(view.imageBackgroundCurrent != null) {
             view.imageBackgroundRect.y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthBackground * view.parallaxFactor
         }
