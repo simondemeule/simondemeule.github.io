@@ -106,6 +106,13 @@ function View() {
             }, 600)
             view.imageBackgroundCurrent = view.imageBackground
             view.imageForegroundCurrent = view.imageForeground
+        } else {
+            if(view.isReadyImageBackgroundTemp) {
+                view.imageBackgroundCurrent = view.imageBackgroundTemp
+            }
+            if(view.isReadyImageForegroundTemp) {
+                view.imageForegroundCurrent = view.imageForegroundTemp
+            }
         }
         view.isDirtyPositionsGlobal = true
     }
