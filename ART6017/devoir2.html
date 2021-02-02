@@ -1,0 +1,69 @@
+<!-- created by Simon Demeule -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+        <title>ART 6017 — Devoir 2</title>
+    </head>
+        <body style="background-color: #000000;">
+            <link rel="preconnect" href="https://fonts.gstatic.com"> 
+            <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Space+Mono:ital@1&family=Spartan&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="style.css">
+            <script src="script.js"></script>
+            <canvas id="canvas" style="width: 0; height: 0; top: 0; left: 0; position: fixed"></canvas>
+            <div class="main container">
+                <div class="main headline">
+                    ART 6017 — Internet et Web      
+                </div>
+                <div class="tab group">
+                    <div class="tab instance" onclick="location.href='index.html'">Plan de cours</div>
+                    <div class="tab instance" onclick="location.href='cours1.html'">Cours 1</div>
+                    <div class="tab instance" onclick="location.href='cours2.html'">Cours 2</div>
+                    <div class="tab instance" onclick="location.href='cours3.html'">Cours 3</div>
+                    <div class="tab instance" onclick="location.href='devoir1.html'">Devoir 1</div>
+                    <div class="tab instance selected">Devoir 2</div>
+                    <div class="tab instance" onclick="location.href='projet.html'">Projet</div>
+                </div>
+                <div class="tab underline"></div>
+                <div class="content whole">
+                    <div class="content section">
+                        <div class="content headline">Devoir 2 — Proposition de projet (à remettre pour le cours 3)</div>
+                        <div class="content block">
+                            <p>Préparez une proposition de projet en équipes de 2 (il y aura exceptionnellement une seule équipe de 1 ou de 3 si la cohorte est impaire). Ce devoir prend encore une fois la forme d'une <b>page web</b>, présentant une rédaction d'environ <b>200 mots</b>. Cette rédaction comportera trois sections: une <b>définition du projet</b>, une <b>maquette</b>, et un <b>survol des techniques</b> et technologies nécessaires à sa réalisation. Vous me présenterez cette proposition en privé lors du troisième cours (pas de présentation formelle, c'est plutôt une discussion et un moment qui me permet de vous aiguiller).</p>
+                        </div>
+                        <div class="content quote">
+                            Pourquoi un projet? — Car cela vous laisse la liberté d'explorer le web, de vous intéresser à ce qui vous attire, et de développer vos connaissances de façon autonome. Cela vous permet aussi de vous fixer des objectifs appropriés selon votre niveau d'expérience avec le web.
+                        </div>
+                        <div class="content quote">
+                            Pourquoi le réaliser en équipe? — Car cela encourage le partage de connaissances, et car le travail d'équipe, c'est la réalité du monde du web et du logiciel. Si vous n'êtes pas déjà familiers avec les logiciel de contrôle de version tels GitHub, cela vous donnera un outil qui vous servira dans tous vos futurs projets logiciel collaboratifs.
+                        </div>
+                        <div class="content block">
+                            <p>Les sites créés lors du premier devoir sont là pour faciliter la création d'équipes — allez les explorer, et trouvez avec qui vous avez des affinités! Idéalement les équipes seront formés avec des étudiants ayant des niveaux d'expérience contrastants pour favoriser l'entraide.</p>
+                            <p>Gardez en tête deux concepts: <b>exploration</b>, <b>faisabilité</b>. Votre projet doit être mené de façon autonome: il doit suffisamment vous sortir de votre zone de confort pour explorer un terrain inconnu, mais vous devez y être juste assez confortable pour qu'il soit faisable compte tenu vos capacités et le temps alloué. L'essentiel de cet exercice consiste à formuler un projet qui balance ces deux nécessités opposés.</p>
+                            <p>Vous êtes encouragés à suivre une démarche artistique dans la réalisation de ce projet, au sens très large — vous n'avez pas à être frappés d'une inspiration transcendante et livrer un magnum opus — s'amuser avec des idées, expérimenter avec le médium, essayer d'imiter un artiste qui vous inspire, c'est une démarche valide. Si l'art n'est pas votre tasse de thé, vous pouvez aussi vous intéresser à l'aspect plus technique des choses, et tenter de reproduire un certain type de page web.</p>
+                            <p>Les mêmes consignes s'appliquent à ce devoir, quand à la forme du site: vous devez utiliser GitHub pages et séparer le HTML du CSS. Le style est à votre discrétion, et la qualité du design sera récompensée.</p>
+                            <p>Pour ce qui est de la rédaction, dans la définition de projet, établissez clairement ce que vous souhaitez faire: si vous avez une idée claire de la page que vous voulez créer, décrivez la. Si vous voulez expérimenter avec une technique pour vous l'approprier, décrivez la démarche et les expérimentations que vous souhaitez mener. Si vous voulez créer une oeuvre d'art web, décrivez l'effet que vous voulez produire, les questions que vous voulez susciter, ou la réflection que vous voulez suivre, et expliquez comment vous envisagez le produit final (ou votre idée de ce qu'il pourrait être).</p>
+                            <p>Présentez au moins un maquette de ce que vous envisagez. Ça peut être une version très schématique et brouillon de ce que voulez construire. Ça peut être un prototype très primitif de votre projet. Libre à vous de dessiner, griffonner, de créer un nuage de concepts, ou d'explorer une autre représentation visuelle pertinente. Si vous avez une vision très claire de ce que vous voulez réaliser, et que vous êtes familier avec des outils de design graphique, vous pouvez vous y appliquer davantage et produire une version polie du résultat escompté.</p>
+                            <p>Pour le survol technique, énoncez les techniques clés nécessaires à la réalisation de votre projet, en particulier celles que vous aurez à apprendre pour réaliser le projet. Ça être par exemple une certaine fonctionnalité de HTML, de Javascript, d'une librairie, une technique de programmation, etc. Si vous trouvez des guides ou des sources d'information pertinentes à ces sujets, incluez-les.</p>
+                            <p>Encore une fois, des points bonus sont réservés pour le dépassement des attentes.</p>
+                        </div>
+                        <div class="content headline">Grille d'évaluation</div>
+                        <div class="content accent mono">
+                            <p>20% Définition du projet : Aspect exploration</p>
+                            <p>20% Définition du projet : Aspect faisabilité</p>
+                            <p>20% Maquette</p>
+                            <p>20% Survol technique</p>
+                            <p>05% Qualité de la langue et taille</p>
+                            <br>
+                            <p>05% Site : Qualité du design</p>
+                            <p>05% Site : Séparation du HTML et CSS</p>
+                            <p>05% Site : Utilisation de GitHub</p>
+                            <br>
+                            <p>10% Bonus : Dépassement des attentes </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+</html>

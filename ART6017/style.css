@@ -2,18 +2,6 @@ html, body {
     height: auto; 
 }
 
-/*
-@font-face {
-    font-family: Spartan;
-    src: url("Spartan-VariableFont_wght.ttf") format(truetype)
-}
-
-@font-face {
-    font-family: Antic;
-    src: url("AnticDidone-Regular.ttf") format(truetype)
-}
-*/
-
 #canvas {
     z-index: -1;
     filter: blur(50px);
@@ -95,6 +83,14 @@ html, body {
     margin: 0;
 }
 
+.content.block>p>b {
+    background-color: #FF2200;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-style: italic;
+    padding: 0.2rem;
+}
+
 .content.quote {
     margin-bottom: 2rem;
     display: inline-block;
@@ -142,11 +138,24 @@ html, body {
     margin-right: 1.2rem;
     margin-bottom: 0.9rem;
     padding: 0.8rem;
-    font-family: Antic Didone;
+    font-family: Spartan;
     font-weight: 300;
     font-size: 1rem;
     color: #FF2200;
     border-color: #FF2200;
     border-width: 0.12rem;
     border-style: solid;
+}
+
+.content.mono {
+    padding: 1.2rem;
+    border-color: #FF2200;
+    border-width: 0.12rem;
+    border-style: solid;
+    font-family: 'Space Mono';
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1rem;
+    color: #FF2200;
+    background: rgba(0, 0, 0, 0.4);
 }

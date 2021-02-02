@@ -195,10 +195,12 @@ function View() {
 
         view.parallaxFactor = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)
 
-        if(isNaN(view.parallaxFactor)) {
-            // this happens if the page can't be scrolled through
+        if(isNaN(view.parallaxFactor) || !isFinite(view.parallaxFactor)) {
+            // this happens if the page can't be scrolled through / if the page can't be scrolled through but is scrolled via Safari's elastic thigny
             view.parallaxFactor = 0
         }
+
+        console.log(view.parallaxFactor)
 
         if(view.imageBackgroundCurrent != null) {
             view.imageBackgroundRect.y = - window.innerHeight * view.pixelRatio * view.parallaxStrengthBackground * view.parallaxFactor
@@ -222,6 +224,7 @@ function View() {
                 view.isDirty = true
             }
 
+            // commenting out this whole block still results in a memory leak. it seems like something cursed is going on inside requestAnimationFrame.
             if (view.isDirty) {
                 view.isDirty = false
 
@@ -270,7 +273,7 @@ function Model() {
     this.isReady = false
 
     this.initialize = function() {
-        model.targets = document.querySelectorAll(".headline, .content.quote, .tab.instance")
+        model.targets = document.querySelectorAll(".headline, .content.quote, .content.mono, .tab.instance")
         model.isReady = true
     }
 }
