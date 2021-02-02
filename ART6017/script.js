@@ -165,6 +165,8 @@ function View() {
     }
 
     this.updatePositionsGlobal = function() {
+        // TODO: some of the math is wrong here. effective parallax displacement is way too high for short pages. 
+
         view.isDirtyPositionsGlobal = false
 
         view.ratioClient = window.innerWidth / window.innerHeight
@@ -242,10 +244,11 @@ function View() {
                 view.context.fillStyle = "#000000"
                 view.context.fillRect(0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
 
+                // TODO: try using the fully specified drawImage method. see https://gamedev.stackexchange.com/questions/32221/huge-performance-difference-when-using-drawimage-with-img-vs-canvas
+
                 // draw background image
                 if(view.imageBackgroundCurrent != null) {
                     view.context.drawImage(view.imageBackgroundCurrent, view.imageBackgroundRect.x, view.imageBackgroundRect.y, view.imageBackgroundRect.width, view.imageBackgroundRect.height)
-                    // view.context.drawImage(view.imageBackgroundCurrent, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
                 }     
 
                 // setup clipping mask
@@ -266,7 +269,6 @@ function View() {
                 // draw foreground image
                 if(view.imageForegroundCurrent != null) {
                     view.context.drawImage(view.imageForegroundCurrent, view.imageForegroundRect.x, view.imageForegroundRect.y, view.imageForegroundRect.width, view.imageForegroundRect.height)
-                    // view.context.drawImage(view.imageForegroundCurrent, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio, 0, 0, window.innerWidth * view.pixelRatio, window.innerHeight * view.pixelRatio)
                 }
 
                 view.context.restore()
@@ -310,6 +312,7 @@ function Controller() {
     this.update = function() {
         controller.view.renderModel(controller.model)
         window.requestAnimationFrame(controller.update)
+        // TODO: maybe hook this up in a way that doesn't always request a frame
     }
 }
 
