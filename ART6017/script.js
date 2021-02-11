@@ -301,6 +301,7 @@ function Controller() {
         window.onscroll = function() {
             controller.view.handleScroll()
         }
+
         window.onresize = function() {
             controller.view.handleResize()
         }
@@ -308,6 +309,7 @@ function Controller() {
     }
 
     this.update = function() {
+        //controller.view.handleScroll()
         controller.view.renderModel(controller.model)
         window.requestAnimationFrame(controller.update)
         // TODO: maybe hook this up in a way that doesn't always request a frame
