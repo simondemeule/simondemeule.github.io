@@ -5,7 +5,9 @@ html, body {
 }
 
 html {
-    font-family: Futura,Trebuchet MS,Arial,sans-serif; 
+    font-family: 'Space Grotesk', sans-serif;
+    /*font-family: 'Space Mono', monospace;*/
+    background-color: rgb(21, 21, 21);
 }
 
 body {
@@ -38,81 +40,92 @@ body {
     
     transition: all cubic-bezier(0, .21, .37, 1) 0.3s !important;
     
-    background-color: rgb(0, 18, 59);
+    background-color: rgb(21, 21, 21);
 }
 
 .loading-text-sub {
-    color: inherit;
     padding-top: 45vh;
     margin-bottom: -45vh;
     height: 0;
     width: 0;
+    width: 100vw;
+    text-align: center;
 }
 
 .loading-text {
-    color: inherit;
-    width: 100vw;
-    text-align: center;
+    font-family: 'Space Mono', monospace;
     font-size: 2rem;
+    padding: 0.7rem;
+    display: inline-block;
+}
+
+.loading-text.front {
+    background-color: rgb(21, 21, 21);
+    color: rgb(220, 220, 220);
+}
+
+.loading-text.back {
+    background-color: rgb(220, 220, 220);
+    color: rgb(21, 21, 21);
 }
 
 .top-hello-sub {
-    background-color: rgb(224, 107, 21);
-    color: rgb(255, 255, 255);
+    background-color: rgb(34, 34, 34);
+    color: rgb(220, 220, 220);
 }
 
 .top-name-sub {
-    background-color: rgb(24, 152, 209);
-    color: rgb(255, 255, 255);
+    background-color: rgb(228, 49, 18);
+    color: rgb(220, 220, 220);
 }
 
 .top-contact-info {
-    background-color: rgb(255, 255, 255);
-    color: rgb(5, 73, 103);
+    background-color: rgb(220, 220, 220);
+    color: rgb(34, 34, 34);
 }
 
 .top-contact-info>p>a {
-    color: rgb(224, 107, 21);
+    color: rgb(228, 49, 18);
 }
 
 .top-contact-info>p>a:visited {
-    color: rgb(224, 107, 21);
+    color: rgb(228, 49, 18);
 }
 
 .top-contact-button {
-    background-color: rgb(224, 107, 21);
-    color: rgb(255, 255, 255);
+    background-color: rgb(228, 49, 18);
+    color: rgb(220, 220, 220);
 }
 
 .top-portfolio-button {
     background-color: rgb(234, 237, 242);
-    color: rgb(224, 107, 21);
+    color: rgb(228, 49, 18);
 }
 
 .content-title {
     background-color: rgb(0 ,0 ,0 );
-    color: rgb(255, 255, 255);
+    color: rgb(220, 220, 220);
 }
 
 .content {
     background-color: rgb(234, 237, 242);
-    color: rgb(0, 0, 0);
+    color: rgb(21, 21, 21);
 }
 
 a {
-    color: rgb(224, 107, 21);
+    color: rgb(228, 49, 18);
 }
 
 @media (min-aspect-ratio: 4/5) {
     /* desktop ratio */
     
     .top-content-sub-1 {
-    background-color: rgb(5, 73, 103);
+    background-color: rgb(57, 57, 57);
     }
 
     .top-content {
-        background-color: rgb(24, 152, 209);
-        color: rgb(255, 255, 255);
+        background-color: rgb(34, 34, 34);
+        color: rgb(220, 220, 220);
     }
     
     html {
@@ -128,7 +141,7 @@ a {
     }
     
     .top-title-sub {
-        margin: 15vw;
+        margin: 20vw;
         margin-top: 10vw;
         margin-bottom: 0;
         overflow: hidden;
@@ -144,7 +157,7 @@ a {
 
     .top-name-sub {
         float: left;
-        font-size: 2.7rem;
+        font-size: 3.1rem;
         height: 3.8rem;
         padding: 0.6rem;
     }
@@ -152,7 +165,7 @@ a {
     .top-content-sub-1 {
         /* used as main top group */
         float: left;
-        margin: 15vw;
+        margin: 20vw;
         margin-top: 5vw;
         margin-bottom: 5vw;
     }
@@ -165,7 +178,7 @@ a {
 
     .top-image-sub {
         float: left;
-        width: 40vw;
+        width: 30vw;
     }
 
     .top-image-sub>img {
@@ -194,15 +207,15 @@ a {
         /* used give contact info it's width in vw */
         margin-left: 5vw;
         margin-right: 5vw;
-        width: 60vw;
+        width: 50vw;
         height: 6rem;
     }
 
     .top-contact-info {
         /* used give contact info it's padding in rem */
-        height: 8rem;
+        height: 9rem;
         padding: 1rem;
-        margin-top: 1rem;
+        margin-top: 1.3rem;
         transform: scale(1.2);
         transition: all cubic-bezier(.47, .01, .06, 1.01) 0.6s;
     }
@@ -212,14 +225,14 @@ a {
     }
 
     .top-contact-info.full {
-        margin-top: -9rem;
+        margin-top: -11rem;
         transform: scale(1);
     }
 
     .top-contact-button {
         float: left;
         text-align: center;
-        width: 70vw;
+        width: 60vw;
         font-size: 1.5rem;
         padding-top: 0.6rem;
         padding-bottom: 0.6rem;
@@ -229,7 +242,7 @@ a {
     .top-portfolio-button {
         float: left;
         text-align: center;
-        width: 70vw;
+        width: 60vw;
         font-size: 1.5rem;
         padding-top: 0.6rem;
         padding-bottom: 0.6rem;
@@ -238,16 +251,16 @@ a {
     
     .content-title {
         float: left;
-        margin-left: 15vw;
-        margin-right: 15vw;
+        margin-left: 20vw;
+        margin-right: 20vw;
         padding: 0.6rem;
         font-size: 1.5rem;
     }
     
     .content {
         float: left;
-        margin-left: 15vw;
-        margin-right: 15vw;
+        margin-left: 20vw;
+        margin-right: 20vw;
         margin-bottom: 5vw;
         padding: 0.6rem;
     }
@@ -403,13 +416,13 @@ a {
     /* mobile ratio */
     
     .top-content-sub-1 {
-        background-color: rgb(24, 152, 209);
+        background-color: rgb(34, 34, 34);
         
     }
 
     .top-content {
-        background-color: rgb(5, 73, 103);
-        color: rgb(255, 255, 255);
+        background-color: rgb(34, 34, 34);
+        color: rgb(220, 220, 220);
     }
     
     html {

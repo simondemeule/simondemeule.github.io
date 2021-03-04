@@ -13,21 +13,21 @@
         <div class="project-title">Curvature</div>
 
         <div class="project-content">
-            <div style="color: rgb(220, 220, 220); background-color: rgb(0, 0, 0)">
+            <div style="color: rgb(220, 220, 220); background-color: rgb(21, 21, 21)"></div>
                 <p>Curvature is an experimental hybrid raytracing / raymarching 3D engine written from scratch in C++ with one goal in mind: allowing light to be curved efficiently.</p>
                 <p>Curvature implements common ray-tracing optomization such as BVH acceleration and multithreading, while also implementing a novel technique for curved light-path integration, which uses distance functions to define safe, spherical zones where some calculations can be skipped, resulting in a 1.5x-4x speedup in render times.</p>
                 <p>The engine makes very few assumptions about the distortion fields; they are represented as arbitrary functions of not only position, but direction, and they are not required to have a closed-form integral. The only requirement is that they be non-zero within a restricted, bounded region. Multiple fields are allowed to overlap, in which case their effect is combined additively. This gives immense freedom in implementing fields that generate strange space curvature.</p>
                 <p>You can look into Curvature's source code and more detailed documentation <a style="color: rgb(226, 70, 210)" href="https://github.com/simondemeule/Curvature">here on my GitHub</a>.</p>
             </div>
             <img src="/Curvature/curvthumb.jpg" data-src="/Curvature/anim.gif">
-            <div style="color: rgb(220, 220, 220); background-color: rgb(0, 0, 0)">
+            <div style="color: rgb(220, 220, 220); background-color: rgb(21, 21, 21)">
                 <p>GIF above: orbiting around a 7x7 grid of spheres with two light-repelling fields and a light-bending field at the center, which twists light in a fashion similar to the way magnetic fields bend the trajectory of electrons. The original 180 frame, 1920x1080, 2x anti-aliased render took about 8 hours to complete on a 8-core i9 2019 15" MacBook Pro running an earlier version of the software.</p>
             </div>
         </div>
 
-        <div class="title-style" style="color: rgb(0, 0, 0)"></div>
+        <div class="title-style" style="color: rgb(220, 220, 220)"></div>
 
-        <div class="background-style" style="background-color: rgb(220, 220, 220);"></div>
+        <div class="background-style" style="background-color: rgb(57, 57, 57);"></div>
 
         <style>
             .obstructor {

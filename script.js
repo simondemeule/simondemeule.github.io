@@ -1,28 +1,12 @@
 // created by Simon Demeule
 
-/* Note to anyone evaluating my coding skills here
+/*  
+    
+    This code is trash ::::))))) 
 
-I wrote this in my first year at university, having barely learnt what object-oriented programming was, and having little clue what design patterns server-executed code was all about. The result is a really weird, non conventional, non optimal solution to a pretty standard problem.
-
-Here, rather than having the server automatically build the page for us from a database, the client is patching together a bunch of HTML files together into one. Because there is no server-side code, we have to specify where those files are, which is pretty unpractical. This also means extra wait time for the client.
-
-If I were to rewrite this (which is bound to happen sometime soon), I would take a much different route.
-*/
-
-/* TODO
-
-• rewrite this whole mess with a priority queue
-• revert to low-res project content images on replacetothumb aka fix safari lag
-• make thumb naming systematic
-• substitute hover effects by scroll detection on mobile
-• debounced resize obstructor & recalculation methods
-• get futura + futura book for real and implement font loading detection
-• build skeleton from single project tags
-• get proper sub/sup naming convention
-• remove redundant CSS in project pages (obstructor stuff)
-• dynamic title length
-
-self note: to enable/disable google analytics, comment/uncomment script in index.html and uncomment gtag(...) in this script
+    If you are doing a code review of my work, please see what is pinned on my GitHub instead (https://github.com/simondemeule)
+    I wrote this before I really knew the basics of programming and it shows
+    This is extremely convoluted, incomprhensible, inefficient
 
 */
 
@@ -584,6 +568,7 @@ function viewProject(newActive, originIsHistory) {
 
 /* These functions are ran initially */
 
+// disabled when restyle was done; this is never called
 function setInitialUIColor() {
     var topColor, bottomColor;
     var name = window.location.pathname;
@@ -617,7 +602,7 @@ function updateRem() {
 }
 
 $(document).ready(function () {
-    setInitialUIColor();
+    //setInitialUIColor();
     updateRem();
     loadProjectObjects();
 });
