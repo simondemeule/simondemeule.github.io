@@ -13,7 +13,7 @@
         <div class="project-title">Curvature</div>
 
         <div class="project-content">
-            <div style="color: rgb(220, 220, 220); background-color: rgb(21, 21, 21)"></div>
+            <div style="color: rgb(220, 220, 220); background-color: rgb(21, 21, 21)">
                 <p>Curvature is an experimental hybrid raytracing / raymarching 3D engine written from scratch in C++ with one goal in mind: allowing light to be curved efficiently.</p>
                 <p>Curvature implements common ray-tracing optomization such as BVH acceleration and multithreading, while also implementing a novel technique for curved light-path integration, which uses distance functions to define safe, spherical zones where some calculations can be skipped, resulting in a 1.5x-4x speedup in render times.</p>
                 <p>The engine makes very few assumptions about the distortion fields; they are represented as arbitrary functions of not only position, but direction, and they are not required to have a closed-form integral. The only requirement is that they be non-zero within a restricted, bounded region. Multiple fields are allowed to overlap, in which case their effect is combined additively. This gives immense freedom in implementing fields that generate strange space curvature.</p>
