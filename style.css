@@ -116,6 +116,11 @@ a {
     color: rgb(228, 49, 18);
 }
 
+.top-projects {
+    background-color: rgb(34, 34, 34);
+    color: rgb(220, 220, 220);
+}
+
 @media (min-aspect-ratio: 4/5) {
     /* desktop ratio */
     
@@ -229,7 +234,7 @@ a {
         transform: scale(1);
     }
 
-    .top-contact-button {
+    .top-contact-button, .top-projects {
         float: left;
         text-align: center;
         width: 60vw;
@@ -237,6 +242,12 @@ a {
         padding-top: 0.6rem;
         padding-bottom: 0.6rem;
         cursor: pointer;
+    }
+
+    .top-projects {
+        margin-bottom: 2rem;
+        margin-left: 20vw;
+        margin-right: 20vw;
     }
     
     .top-portfolio-button {
@@ -549,7 +560,7 @@ a {
         transform: scale(1);
     }
 
-    .top-contact-button {
+    .top-contact-button, .top-projects {
         float: left;
         text-align: center;
         width: 80vw;
@@ -557,6 +568,12 @@ a {
         padding-top: 0.6rem;
         padding-bottom: 0.6rem;
         cursor: pointer;
+    }
+
+    .top-projects {
+        margin-bottom: 2rem;
+        margin-left: 10vw;
+        margin-right: 10vw;
     }
     
     .top-portfolio-button {
