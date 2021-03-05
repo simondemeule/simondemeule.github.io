@@ -37,26 +37,26 @@ function loadProjectObject(name) {
         obj.backgroundStyle = $(data).filter(".background-style").attr("style");
 
         obj.stateObjectLoad = true;
-        console.log("* loaded project object " + obj.name);
+        //console.log("* loaded project object " + obj.name);
         checkProjectObjectLoad();
     });
     obj.loadContent = function(callback) {
         /* this loads and returns the project's content from it's index file */
-        console.log("> requested content for " + obj.name);
+        //console.log("> requested content for " + obj.name);
         $.get(obj.file, function (data) {
-            console.log("* recieved content for " + obj.name);
+            //console.log("* recieved content for " + obj.name);
             var content = $(data).filter(".project-content");
             callback(content);
         });
     }
     obj.loadImage = function(callback) {
         /* this loads and returns the project's main image from it's index file */
-        console.log("> requested image for " + obj.name);
+        //console.log("> requested image for " + obj.name);
         var image = $("<img />").attr("src", obj.fileImage).on("load", function() {
             if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
                 alert('broken image!');
             } else {
-                console.log("* recieved image for " + obj.name);
+                //console.log("* recieved image for " + obj.name);
                 callback(image);
             }
         });
@@ -71,7 +71,7 @@ var projectObjectsLoaded = false;
 var projectViewsLoaded = false;
 
 function loadProjectObjects() {
-    console.log("> loading projects array");
+    //console.log("> loading projects array");
     $(".project").each(function (i) {
         projects.push(loadProjectObject($(this).attr("id")));
     });
@@ -80,21 +80,21 @@ function loadProjectObjects() {
 /* Everytime a project object finishes loading, it calls the checkProjectObjectLoad() function, which checks if all other project objects are loaded. If they are, it calls onAllProjectObjectsLoaded(), which then sets the initial active project and calls loadProjectViews(), which appends in the projects. */
 
 function checkProjectObjectLoad() {
-    console.log("> checking project object loading");
+    //console.log("> checking project object loading");
     var totalProjectObjects = $(".project").length;
 
     if(projects.length != totalProjectObjects) {
-        console.log("| array incomplete");
+        //console.log("| array incomplete");
         return;
     }
     for(var i = 0; i < totalProjectObjects; i++) {
         if(!projects[i].stateObjectLoad) {
-            console.log("| first unloaded project: " + projects[i].name);
-            console.log("| not all loaded");
+            //console.log("| first unloaded project: " + projects[i].name);
+            //console.log("| not all loaded");
             return;
         }
     }
-    console.log("| all loaded")
+    //console.log("| all loaded")
     projectObjectsLoaded = true;
     onAllProjectObjectsLoaded();
 }
@@ -107,7 +107,7 @@ function onAllProjectObjectsLoaded() {
 }
 
 function loadProjectViews() {
-    console.log("loading project views");
+    //console.log("loading project views");
     var active = getActiveProject();
     for (var i = 0; i <  projects.length; i++) {
         if (active === i) {
@@ -122,27 +122,27 @@ function loadProjectViews() {
 /* A similar process is reiterated here: the append functions calls the  checkProjectViewLoad() function to check if all other projects are rendered. When they all are, all that is left is to set the intial scroll, enable transitions, and remove the obstructor*/
 
 function checkProjectViewLoad() {
-    console.log("> checking project view loading");
+    //console.log("> checking project view loading");
     var totalProjectViews = projects.length;
     var loadedProjectViews = 0;
     for(var i = 0; i < totalProjectViews; i++) {
         if(projects[i].stateViewLoad) {
             loadedProjectViews++;
         } else {
-            console.log("| unloaded project: " + projects[i].name);
+            //console.log("| unloaded project: " + projects[i].name);
         }
     }
     if(totalProjectViews == loadedProjectViews) {
-        console.log("| all loaded")
+        //console.log("| all loaded")
         projectViewsLoaded = true;
         onAllProjectViewsLoaded();
     } else {
-        console.log("| not all loaded");
+        //console.log("| not all loaded");
     }
 }
 
 function updateLoadingBar() {
-    console.log("> updating loading bar")
+    //console.log("> updating loading bar")
     var totalProjectElements = projects.length * 2;
     var loadedProjectElements = 0;
     for(var i = 0; i < projects.length; i++) {
@@ -158,19 +158,19 @@ function updateLoadingBar() {
 
 function onAllProjectViewsLoaded() {
     setInitialScroll();
-    console.log("==== page loaded ====")
+    //console.log("==== page loaded ====")
 
 }
 
 /* The next few append functions take care of dynamic styling */
 
 function appendProjectBackgroundStyle(i) {
-    console.log("> appending background style " + projects[i].name);
+    //console.log("> appending background style " + projects[i].name);
     projects[i].$sub.attr("style", projects[i].backgroundStyle);
 }
 
 function appendProjectContentStyle(i) {
-    console.log("> appending content style " + projects[i].name);
+    //console.log("> appending content style " + projects[i].name);
     var $style = $("#content-style");
     var contentHeight = projects[i].$contentsub2.children(".project-content").height()/rem;
     var htmlString =
@@ -189,7 +189,7 @@ function appendProjectContentStyle(i) {
 
 /* broken for now
 function recalculateContentStyles() {
-    console.log("> recalculating content styles");
+    //console.log("> recalculating content styles");
     updateRem();
     $("#content-style").remove();
     for(var i = 0; i < projects.length; i++) {
@@ -199,7 +199,7 @@ function recalculateContentStyles() {
 */
 
 function appendProjectTitle(i) {
-    console.log("> appending title " + projects[i].name);
+    //console.log("> appending title " + projects[i].name);
     projects[i].$sub.prepend(projects[i].title);
     // this is necessary for some reason
     projects[i].$sub.children(".project-title").attr("style", projects[i].titleStyle);
@@ -209,7 +209,7 @@ function appendProjectTitle(i) {
 
 function appendProjectThumb(i) {
     // needed because $.get is async: by the time the request had succeeded, the index would change.
-    console.log("> appending thumb " + projects[i].name);
+    //console.log("> appending thumb " + projects[i].name);
     appendProjectTitle(i);
     appendProjectBackgroundStyle(i);
     projects[i].loadImage(function (image) {
@@ -217,24 +217,24 @@ function appendProjectThumb(i) {
         projects[i].$imagesub.append(image);
         updateLoadingBar();
         if(projects[i].stateContentLoad === true) {
-            console.log("| loaded project view for " + projects[i].name);
+            //console.log("| loaded project view for " + projects[i].name);
             projects[i].stateViewLoad = true;
             appendProjectContentStyle(i);
             checkProjectViewLoad();
         }
     });
     projects[i].loadContent(function(content) {
-        console.log("| requested project content images for " + projects[i].name)
+        //console.log("| requested project content images for " + projects[i].name)
         projects[i].$contentsub2.append(content);
         var $images = projects[i].$contentsub2.children(".project-content").children("img");
         projects[i].numContentImages = $images.length;
-        console.log("| counted " + projects[i].numContentImages + " project content images for " + projects[i].name);
+        //console.log("| counted " + projects[i].numContentImages + " project content images for " + projects[i].name);
         if(projects[i].numContentImages === 0) {
-            console.log("| loaded content for " + projects[i].name + " (trivial case)");
+            //console.log("| loaded content for " + projects[i].name + " (trivial case)");
             projects[i].stateContentLoad = true;
             updateLoadingBar();
             if(projects[i].stateImageLoad === true) {
-                console.log("| loaded project view for " + projects[i].name);
+                //console.log("| loaded project view for " + projects[i].name);
                 projects[i].stateViewLoad = true;
                 appendProjectContentStyle(i);
                 checkProjectViewLoad();
@@ -242,15 +242,15 @@ function appendProjectThumb(i) {
         } else {
             $images.each(function(index, element) {
                 $(element).on("load", function() {
-                    console.log("* loaded content thumb image for " + projects[i].name);
+                    //console.log("* loaded content thumb image for " + projects[i].name);
                     $(element).off("load");
                     projects[i].numContentImagesThumbLoad++;
                     if(projects[i].numContentImagesThumbLoad === projects[i].numContentImages) {
-                        console.log("| loaded content for " + projects[i].name);
+                        //console.log("| loaded content for " + projects[i].name);
                         projects[i].stateContentLoad = true;
                         updateLoadingBar();
                         if(projects[i].stateImageLoad === true) {
-                            console.log("| loaded project view for " + projects[i].name);
+                            //console.log("| loaded project view for " + projects[i].name);
                             projects[i].stateViewLoad = true;
                             appendProjectContentStyle(i);
                             checkProjectViewLoad();
@@ -263,35 +263,35 @@ function appendProjectThumb(i) {
 }
 
 function appendProjectFull(i) {
-    console.log("> appending full " + projects[i].name);
+    //console.log("> appending full " + projects[i].name);
     appendProjectTitle(i);
     appendProjectBackgroundStyle(i);
     projects[i].$.addClass("full");
     projects[i].$sub.addClass("full");
     projects[i].loadImage(function (image) {
-        console.log("* loaded project image " + projects[i].name);
+        //console.log("* loaded project image " + projects[i].name);
         projects[i].stateImageLoad = true;
         projects[i].$imagesub.append(image);
         updateLoadingBar();
         if(projects[i].stateContentLoad === true) {
-            console.log("| loaded project view " + projects[i].name);
+            //console.log("| loaded project view " + projects[i].name);
             projects[i].stateViewLoad = true;
             appendProjectContentStyle(i);
             checkProjectViewLoad();
         }
     })
     projects[i].loadContent(function(content) {
-        console.log("| requested content thumb images for " + projects[i].name)
+        //console.log("| requested content thumb images for " + projects[i].name)
         projects[i].$contentsub2.append(content);
         var $images = projects[i].$contentsub2.children(".project-content").children("img");
         projects[i].numContentImages = $images.length;
-        console.log("| counted " + projects[i].numContentImages + " content images for " + projects[i].name);
+        //console.log("| counted " + projects[i].numContentImages + " content images for " + projects[i].name);
         if(projects[i].numContentImages === 0) {
-            console.log("| loaded content for " + projects[i].name + " (trivial case)");
+            //console.log("| loaded content for " + projects[i].name + " (trivial case)");
             projects[i].stateContentLoad = true;
             updateLoadingBar();
             if(projects[i].stateImageLoad === true) {
-                console.log("| loaded project view for " + projects[i].name);
+                //console.log("| loaded project view for " + projects[i].name);
                 projects[i].stateViewLoad = true;
                 appendProjectContentStyle(i);
                 checkProjectViewLoad();
@@ -299,24 +299,24 @@ function appendProjectFull(i) {
         } else {
             $images.each(function(index, element) {
                 $(element).on("load", function() {
-                    console.log("* loaded content thumb image for " + projects[i].name);
+                    //console.log("* loaded content thumb image for " + projects[i].name);
                     $(element).off("load");
                     projects[i].numContentImagesThumbLoad++;
                     if(projects[i].numContentImagesThumbLoad === projects[i].numContentImages) {
-                        console.log("| loaded content for " + projects[i].name);
+                        //console.log("| loaded content for " + projects[i].name);
                         projects[i].stateContentLoad = true;
                         updateLoadingBar();
                         if(projects[i].stateImageLoad === true) {
-                            console.log("| loaded project view for " + projects[i].name);
+                            //console.log("| loaded project view for " + projects[i].name);
                             projects[i].stateViewLoad = true;
                             appendProjectContentStyle(i);
                             checkProjectViewLoad();
                         }
                         // full res images are only loaded once all content thumbs are present. This slightly reduces the time waiting with the obstructor. Ideally we'd also wait for the other main images to be loaded, but doing so would require too convoluted code in the current state of things. Would be much better with a priority queue.
                         $images.each(function(index, element) {
-                            console.log("| requested content full image for " + projects[i].name);
+                            //console.log("| requested content full image for " + projects[i].name);
                             var $image = $("<img />").attr("src", $(element).data("src")).on("load", function() {
-                                console.log("* loaded content full image for " + projects[i].name);
+                                //console.log("* loaded content full image for " + projects[i].name);
                                 $(element).removeAttr("data-src").attr("src", $image.attr("src"));
                             });
                         });
@@ -326,20 +326,20 @@ function appendProjectFull(i) {
             // the code below maintains the obstructor until all content images are loaded
             /*$images.each(function(index, element) {
                 $(element).on("load", function() {
-                    console.log("* loaded content thumb image for " + projects[i].name);
-                    console.log("| requested content full image for " + projects[i].name);
+                    //console.log("* loaded content thumb image for " + projects[i].name);
+                    //console.log("| requested content full image for " + projects[i].name);
                     $(element).off("load");
                     var $image = $("<img />").attr("src", $(element).data("src")).on("load", function() {
-                        console.log("* loaded content full image for " + projects[i].name);
+                        //console.log("* loaded content full image for " + projects[i].name);
                         $(element).removeAttr("data-src").attr("src", $image.attr("src"));
                     });
                     projects[i].numContentImagesThumbLoad++;
                     if(projects[i].numContentImagesThumbLoad === projects[i].numContentImages) {
-                        console.log("| loaded content for " + projects[i].name);
+                        //console.log("| loaded content for " + projects[i].name);
                         projects[i].stateContentLoad = true;
                         updateLoadingBar();
                         if(projects[i].stateImageLoad === true) {
-                            console.log("| loaded project view for " + projects[i].name);
+                            //console.log("| loaded project view for " + projects[i].name);
                             projects[i].stateViewLoad = true;
                             appendProjectContentStyle(i);
                             checkProjectViewLoad();
@@ -355,14 +355,14 @@ function appendProjectFull(i) {
 /* The replaceProjectTo... functions are the transition sequences from the collapsed to the expanded form of a project. In the case of replaceProjectToFull(), it also takes care of loading the full project images if they aren't already there. '*/
 
 function replaceProjectToThumb(i) {
-    console.log("> replacing to thumb " + projects[i].name);
+    //console.log("> replacing to thumb " + projects[i].name);
     projects[i].$.removeClass("full");
     projects[i].$sub.children(".project-content").removeClass("full");
     projects[i].$sub.removeClass("full");
 }
 
 function replaceProjectToFull(i) {
-    console.log("> replacing to full " + projects[i].name);
+    //console.log("> replacing to full " + projects[i].name);
     projects[i].$.addClass("full");
     projects[i].$sub.addClass("full");
     if(projects[i].stateContentImagesFullLoading === false) {
@@ -370,7 +370,7 @@ function replaceProjectToFull(i) {
         var $images =  projects[i].$contentsub2.children(".project-content").children("img")
         $images.each(function(index) {
             var $image = $("<img />").attr("src", $(this).data("src")).on("load", function() {
-                console.log("* loaded content full image for " + projects[i].name);
+                //console.log("* loaded content full image for " + projects[i].name);
                 $images.filter("[data-src=\"" + $(this).attr("src") + "\"]").removeAttr("data-src").attr("src", $(this).attr("src"))
             });
         })
@@ -380,17 +380,17 @@ function replaceProjectToFull(i) {
 }
 
 function scrollToProject(i) {
-    console.log("> scrolling to project " + (i !== -1 ? projects[i].name : "Index"));
+    //console.log("> scrolling to project " + (i !== -1 ? projects[i].name : "Index"));
     $("html, body").animate({ scrollTop: (i !== -1 ? Math.ceil(projects[i].$.offset().top) : 0) }, 600);
 }
 
 function scrollToProjectCallback(i, callback) {
-    console.log("> scrolling to project " + (i !== -1 ? projects[i].name : "Index") + " (callback-ed)");
+    //console.log("> scrolling to project " + (i !== -1 ? projects[i].name : "Index") + " (callback-ed)");
     $("html, body").animate({ scrollTop: (i !== -1 ? Math.ceil(projects[i].$.offset().top) : 0) }, 600).promise().then(function() {callback()});
 }
 
 function setInitialScroll() {
-    console.log("> setting initial scroll");
+    //console.log("> setting initial scroll");
     //disableTransitions();
     active = getActiveProject();
     if(active !== -1) {
@@ -404,19 +404,19 @@ function setInitialScroll() {
 /* The disable/enableTransitions() functions are used at document load only to prevent elements from changing around as the user arrives on the site */
 
 function disableProjectTransitions(i) {
-    console.log("> disabling transitions for " + projects[i].name);
+    //console.log("> disabling transitions for " + projects[i].name);
     projects[i].$.addClass("transition-disable");
     projects[i].$sub.offset();
 }
 
 function enableProjectTransitions(i) {
-    console.log("> enabling transitions for " + projects[i].name);
+    //console.log("> enabling transitions for " + projects[i].name);
     projects[i].$.removeClass("transition-disable");
     projects[i].$sub.offset();
 }
 
 function disableTransitions() {
-    console.log("> disabling transitions");
+    //console.log("> disabling transitions");
     var htmlString = "\n* {\n" +
         "   -webkit-transition: none;\n" +
         "   transition: none;\n" +
@@ -425,7 +425,7 @@ function disableTransitions() {
 }
 
 function enableTransitions() {
-    console.log("> enabling transitions");
+    //console.log("> enabling transitions");
     $("style#transition-disable").remove();
 }
 
@@ -434,14 +434,14 @@ function enableTransitions() {
 function replaceAddress(newAddress) {
     // avoids creating duplicate entries in history while navigating backwards
     var address = window.location.pathname.split("/").pop().substring(0);
-    console.log("> replacing address")
-    console.log("| old " + address);
-    console.log("| new " + newAddress);
+    //console.log("> replacing address")
+    //console.log("| old " + address);
+    //console.log("| new " + newAddress);
     if (newAddress !== address) {
-        console.log("| address replaced");
+        //console.log("| address replaced");
         history.pushState(null, "", newAddress);
     } else {
-        console.log("| address not replaced");
+        //console.log("| address not replaced");
     }
 }
 
@@ -457,15 +457,15 @@ function replaceTitle(newActive) {
 /* The next get and set functions are utilities for navigating through project indicies and active states */
 
 function getProjectFromName(name) {
-    console.log("> getting project from name");
-    console.log("| input name: " + name);
+    //console.log("> getting project from name");
+    //console.log("| input name: " + name);
     for (var i = 0; i < projects.length; i++) {
         if (projects[i].name == name) {
-            console.log("| extracted index " + i);
+            //console.log("| extracted index " + i);
             return i;
         }
     }
-    console.log("| extracted index -1");
+    //console.log("| extracted index -1");
     return -1;
 }
 
@@ -479,11 +479,11 @@ function getAddressFromProject(i) {
 }
 
 function getProjectFromURL() {
-    console.log("> getting project from URL");
+    //console.log("> getting project from URL");
     name = window.location.pathname;
-    console.log("| input URL " + name);
+    //console.log("| input URL " + name);
     name = name.substring(1, name.lastIndexOf("/"));
-    console.log("| extracted name " + name);
+    //console.log("| extracted name " + name);
     return getProjectFromName(name);
 }
 
@@ -508,13 +508,13 @@ function setActiveProject(newActive) {
 
 /* The viewProject() function is called whenever a project is clicked or when the url is changed. It's role is to check to see if the project change is valid (is it already opened?) and to orchestrate the transitions that follow. '*/
 function viewProject(newActive, originIsHistory) {
-    console.log("> view request for " + (newActive !== -1 ? projects[newActive].name : "Index") + "(origin "+ (originIsHistory ? "" : "non-") + "history)");
+    //console.log("> view request for " + (newActive !== -1 ? projects[newActive].name : "Index") + "(origin "+ (originIsHistory ? "" : "non-") + "history)");
     var active = getActiveProject();
     if (active !== newActive) {
         if (newActive !== -1) {
             if (active === -1) {
-                console.log("| no previous active project");
-                console.log("| transitive load");
+                //console.log("| no previous active project");
+                //console.log("| transitive load");
                 replaceProjectToFull(newActive);
                 replaceTitle(newActive);
                 scrollToProject(newActive);
@@ -523,12 +523,12 @@ function viewProject(newActive, originIsHistory) {
                 }
                 gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
             } else {
-                console.log("| previous active project");
-                console.log("| transitive close and load");
+                //console.log("| previous active project");
+                //console.log("| transitive close and load");
                 replaceProjectToFull(newActive);
                 if(newActive > active) {
                     scrollToProjectCallback(newActive, function() {
-                        console.log("* scrolling done");
+                        //console.log("* scrolling done");
                         replaceTitle(newActive);
                         disableProjectTransitions(active);
                         replaceProjectToThumb(active);
@@ -537,7 +537,7 @@ function viewProject(newActive, originIsHistory) {
                     });
                 } else {
                     scrollToProjectCallback(newActive, function() {
-                        console.log("* scrolling done");
+                        //console.log("* scrolling done");
                         replaceTitle(newActive);
                         disableProjectTransitions(active);
                         replaceProjectToThumb(active);
@@ -551,7 +551,7 @@ function viewProject(newActive, originIsHistory) {
                 gtag('config', 'UA-113804397-1', {'page_path': '/' + getAddressFromProject(newActive)});
             }
         } else {
-            console.log("| return to index");
+            //console.log("| return to index");
             replaceTitle(newActive);
             replaceProjectToThumb(active);
             if(!originIsHistory) {
@@ -561,9 +561,9 @@ function viewProject(newActive, originIsHistory) {
         }
         setActiveProject(newActive);
     } else {
-        console.log("| project already loaded");
+        //console.log("| project already loaded");
     }
-    console.log("==== view updated ====");
+    //console.log("==== view updated ====");
 }
 
 /* These functions are ran initially */
@@ -675,7 +675,7 @@ function setOverProject(newOverProject) {
         if(lastOverProject !== -1) {
             $(projects[lastOverProject].$sub).removeClass("over");
             $(projects[lastOverProject].$).removeClass("over");
-            console.log("== removed project Over styling");
+            //console.log("== removed project Over styling");
             lastOverProject = -1;
         }
     } else if(newOverProject !== lastOverProject) {
@@ -686,7 +686,7 @@ function setOverProject(newOverProject) {
         }
         $(projects[newOverProject].$sub).addClass("over");
         $(projects[newOverProject].$).addClass("over");
-        console.log("== set Over project styling on " + projects[newOverProject].name);
+        //console.log("== set Over project styling on " + projects[newOverProject].name);
         lastOverProject = newOverProject;
     }
     updateOverProjectTimeout = setTimeout(updateOverProject, 100);
