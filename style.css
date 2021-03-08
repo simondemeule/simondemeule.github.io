@@ -125,7 +125,7 @@ a {
     /* desktop ratio */
     
     .top-content-sub-1 {
-    background-color: rgb(57, 57, 57);
+    background-color: rgb(91, 91, 91);
     }
 
     .top-content {
@@ -200,6 +200,13 @@ a {
     .top-content {
         /* used give content it's padding in rem */
         padding: 1rem;
+    }
+
+    .top-content-sub-4 {
+        float: left;
+        padding: 1rem;
+        background-color: rgb(57, 57, 57);
+        color: rgb(220, 220, 220);
     }
 
     .top-contact-info-sub-1 {
@@ -529,6 +536,13 @@ a {
     .top-content {
         /* used give content it's padding in rem */
         padding: 1rem;
+    }
+
+    .top-content-sub-4 {
+        float: left;
+        padding: 1rem;
+        background-color: rgb(57, 57, 57);
+        color: rgb(220, 220, 220);
     }
 
     .top-contact-info-sub-1 {
